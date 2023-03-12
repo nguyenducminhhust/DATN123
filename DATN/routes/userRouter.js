@@ -1,0 +1,18 @@
+const router = require("express").Router();
+const userCtrl = require("../controllers/userCtrl");
+const auth = require("../middleware/auth");
+router.post("/register", userCtrl.register);
+router.post("/createaccount", userCtrl.createaccount);
+router.get("/refresh_token", userCtrl.refreshToken);
+router.post("/login", userCtrl.login);
+router.get("/logout", userCtrl.logout);
+router.get("/infor", auth, userCtrl.getUser); 
+router.get("/userstaff", userCtrl.getAllStaff);
+router.put("/updatestaff", userCtrl.updateStaff);
+router.patch("/addcart", auth, userCtrl.addCart);
+router.patch("/addservicebought",auth, userCtrl.addServiceBought);
+router.get("/history", auth, userCtrl.history);
+router.delete("/deleteuser/:id",userCtrl.deleteUser);
+router.patch("/updatedebt", auth, userCtrl.updateDebt); 
+router.patch("/modifydebt", userCtrl.modifyDebt); 
+module.exports = router;

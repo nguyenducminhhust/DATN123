@@ -1,0 +1,73 @@
+body {
+    background-color: #3c3f41;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;	
+}
+.dashboard {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    /* background-color: #cf1212; */
+    overflow: hidden;
+}
+.menu {
+    position: absolute;
+    width: 200px;
+    height: 100%;
+    background-color: #2c2f31;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.menu li {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    padding: 20px 0;
+    border-bottom: 1px solid #43474a;
+    font-size: 18px;
+    color: #3a11f1;
+    cursor: pointer;
+    transition: 0.4s;
+}
+.menu li:hover {
+    background-color: #218dd4;
+    color: #c71616;
+}
+.content {
+    position: relative;
+    width: calc(100% - 200px);
+    min-height: 100vh;
+    background-color: #ffffff;
+    margin-left: 200px;
+    padding: 30px;
+    box-sizing: border-box;
+}
+/* .contentdashboard{
+    display: flex;
+} */
+.linedatabymonth{
+    width: 500px;
+}
+.linedatabyday{
+    width: 800px;
+}
+.piechartdashboard{
+    width: 500px;
+   
+}
+.bottomdashboard{
+    display: flex;
+}
+.daterange{
+    margin-left: 20px;
+   margin-top: 20px;
+}
+.pichartsize{
+    width:300px;
+}
+.revenueinfo{
+    margin-left: 500px;
+}

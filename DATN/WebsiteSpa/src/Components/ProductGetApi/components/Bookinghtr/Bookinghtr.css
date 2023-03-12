@@ -1,0 +1,44 @@
+.bookinglisthtr{
+    width: 1280px;
+    margin: auto;
+    margin-top: 20px;
+    border: 1px solid grey;
+}
+.bookinglisthtr1{
+    display: flex;
+    /* justify-content: space-around; */
+    justify-content: center;
+}
+.butbookinghtr{
+    margin-top:10px;
+    
+}
+
+.butbookinghtr1{
+    border-radius: 5px;
+    border: 1px solid black;
+    padding: 0px 8px;
+    font-weight: bold;
+}
+ .bookinglisthtr2 table, .bookinglisthtr2 th, .bookinglisthtr2 td{
+    border:1px solid black;
+    
+    
+}
+
+.bookinglisthtr table,th,td{
+    background-color: #b9e7e7;
+}
+.bookinglisthtr2 table{
+    margin-top: 20px;
+    border-collapse: collapse;
+    width: 100%;
+}
+.datebookinghtr{
+    margin-top: 10px;
+    margin-left: 30px;
+}
+
+.datebookinghtr1{
+    font-weight: bold;
+}

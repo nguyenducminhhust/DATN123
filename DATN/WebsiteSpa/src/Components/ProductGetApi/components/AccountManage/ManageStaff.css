@@ -1,0 +1,39 @@
+.managestaff table, .managestaff th, .managestaff td{
+    border: 1px solid black;
+}
+.editstaffbut, .savestaffbut{
+    border-radius: 5px;
+    padding: 2px 8px;
+    font-weight: bold;
+    font-size: 17px;
+    margin-left: 5px;
+}
+.cancelstaffbut, .deletestaffbut{
+    border-radius: 5px;
+    padding: 2px 8px;
+    font-weight: bold;
+    font-size: 17px;
+    margin-left: 15px;
+}
+.managestaff{
+    width: max-content;
+    /* align-self: center; */
+    margin: auto;
+    margin-top: 15px;
+}
+.titlemanagestaff{
+    position: relative;
+    margin: auto;
+    margin-top: 10px;
+    text-align: center;
+}
+.paginatemanagestaff{
+    width: 100%;
+    /* border: 1px solid black; */
+    margin-bottom: 50px;
+    padding: 0;
+    display: flex;
+    justify-content: space-around;
+    margin-top: 15px;
+    font-size: 20px;
+}

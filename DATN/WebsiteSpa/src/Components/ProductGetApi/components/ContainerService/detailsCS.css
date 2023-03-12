@@ -1,0 +1,117 @@
+/* .maininfocontainerservice{
+    justify-content: space-around;
+    width: 1280px;
+} */
+/* .maininfocontainerservice{
+    background-color: rgb(121, 134, 148);
+} */
+.servicenamecontainer{
+    margin-top: 20px;
+    text-transform: uppercase;
+}
+.inforcontainerservice{
+    width:1280px;
+    display: relative;
+    /* position: relative; */
+    padding: 10px 10px;
+    display: flex;
+    border: 2px solid black;
+    margin: auto;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+.imgandbutcontainer{
+ display: block;
+ justify-content:space-around;
+ 
+}
+.buttonshowinfocontainer{
+    width: 45%;
+    justify-content: space-around;
+    display: flex;
+    margin: auto;
+    margin-top: 5px;
+    border-radius: 10px;
+    font-size: 20px;
+    
+}
+.imgcontainerservice{
+    border: 2px solid black;
+    width: fit-content;
+    display: flex;
+    justify-content: space-around;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+.showdetailcontainer{
+    width: fit-content;
+    /* border: 1px solid black; */
+    display: flex;
+    margin-left: 20px;
+    height: max-content;
+}
+.detailbutcontainerservice{
+    border-radius: 10px;
+    border: 2px solid black;
+    background-color: blanchedalmond;
+    padding: 2px 5px;
+    font-weight: bold;
+}
+.detailprocessservice{
+   
+    min-height: 450px;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+.detailbysession{
+    border: 1px solid black;
+    margin-left: 20px;
+    position: relative;
+    width: 400px;
+}
+.infodetailservice1{
+    border: 1px solid black;
+    padding: 8px 15px;
+    font-size: 22px;
+    font-weight: 700;
+    min-width: 400px;
+    display: block;
+}
+.detailbysession3{
+    /* justify-content: space-around; */
+    margin-left: 25px;
+    width: 100%;
+}
+.detailbysession2{
+    display: block;
+    justify-content: space-around;
+    width: 100%;
+}
+.detailbysession4{
+    margin-top: 15px;
+    margin-left: 20px;
+    width: 100%;
+    font-weight: bold;
+    font-size: 20px;
+}
+.titleservicename{
+    text-transform: uppercase;
+    margin-top: 10px;
+    font-size: 20px;
+    text-align: center;
+    height: 30px;
+    color: rgb(19, 139, 139);
+    font-weight: bold;
+}
+.paginatecontainer{
+    width: 100%;
+    /* border: 1px solid black; */
+    margin-bottom: 50px;
+    padding: 0;
+    display: flex;
+    justify-content: space-around;
+    font-size: 25px;
+}
+
+
