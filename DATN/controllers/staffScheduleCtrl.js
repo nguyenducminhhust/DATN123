@@ -20,9 +20,9 @@ const staffScheduleCtrl = {
 
             } = req.body;
             // if (!images) return res.status(400).json({ msg: "No image upload" });
-            //  const product = await Booking.findOne({ product_id });
-            // if (product)
-            //   return res.status(400).json({ msg: "This product already exists." });
+            //  const service = await Booking.findOne({ service_id });
+            // if (service)
+            //   return res.status(400).json({ msg: "This service already exists." });
             const newstaffschedule = new StaffSchedule({
                 email,
                 daywork,
@@ -65,6 +65,24 @@ const staffScheduleCtrl = {
                     service,
                     arraytimework: req.body.arraytimeworkupdate,
                     namestaff,
+                }
+            );
+            res.json({ msg: "Updated a StaffSchedule" });
+        } catch (err) {
+            return res.status(500).json({ msg: err.message });
+        }
+    },
+    updateLostTimeNumber: async (req, res) => {
+        try {
+            const {      
+                arraytimework,
+                namestaff,
+            } = req.body;
+            // if (!images) return res.status(400).json({ msg: "No image upload" });
+            await StaffSchedule.findOneAndUpdate(
+                { namestaff: namestaff },
+                {
+                    arraytimework: arraytimework,
                 }
             );
             res.json({ msg: "Updated a StaffSchedule" });

@@ -6,7 +6,7 @@ router
   .post(costCtrl.createCost);
 
 router
-  .route("/costs/:id") 
+  .route("/costs") 
   .delete(costCtrl.deleteCost)
   .put(costCtrl.updateCost);
 module.exports = router;

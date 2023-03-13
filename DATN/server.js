@@ -20,15 +20,15 @@ app.use(
 app.use("/user", require("./routes/userRouter"));
 app.use("/api", require("./routes/categoryRouter"));
 app.use("/api", require("./routes/upload"));
-app.use("/api", require("./routes/productRouter"));
+app.use("/api", require("./routes/serviceRouter"));
 app.use("/api", require("./routes/paymentRouter"));
 app.use("/api", require("./routes/containerserviceRouter"));
 app.use("/api", require("./routes/bookingRouter"));
-app.use("/api", require("./routes/booklistRouter"));
 app.use("/api", require("./routes/dataprocesscustomerRouter"));
 app.use("/api", require("./routes/staffScheduleRouter"));
 app.use("/api", require("./routes/costRouter"));
 app.use("/api", require("./routes/contactRouter"));
+app.use("/api", require("./routes/exportRouter"));
 
 const URI = process.env.MONGODB_URL;
 

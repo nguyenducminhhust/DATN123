@@ -1,46 +1,47 @@
 import React, { useContext } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
-import { Cart2 } from "./Components/ProductGetApi/GlobalState";
+import { Service } from "./Components/GlobalState";
 // import Contact from "./Components/Contact/Contact";
-import Product2 from "./Components/ProductGetApi/components/products/Products";
-import Login from "./Components/ProductGetApi/components/mainpages/auth/Login";
-import Register from "./Components/ProductGetApi/components/mainpages/auth/Register";
-import Cart3 from "./Components/ProductGetApi/components/mainpages/Cart/Cart";
-import NotFound from "./Components/ProductGetApi/components/utils/not_found/NotFound";
-import DetailProduct from "./Components/ProductGetApi/components/detailProduct/DetailProduct";
-import OrderHistory from "./Components/ProductGetApi/components/history/OrderHistory";
-import OrderDetails from "./Components/ProductGetApi/components/history/OrderDetails";
-import Categories from "./Components/ProductGetApi/components/categories/Categories";
-import CreateProduct from "./Components/ProductGetApi/components/createProduct/CreateProduct";
-import BookingSystem from "./Components/ProductGetApi/components/BookingSystem/BookingSystem";
-import DetailCDPU from "./Components/ProductGetApi/components/CreateDataProcessUser/DetailCDPU";
-import Account from "./Components/ProductGetApi/components/AccountManage/Account";
-import Bookinghtr from "./Components/ProductGetApi/components/Bookinghtr/Bookinghtr";
-import DashBoard from "./Components/ProductGetApi/components/DashBoard/DashBoard";
-import CreateDataProcessUser from "./Components/ProductGetApi/components/CreateDataProcessUser/CreateDataProcessUser";
-import DisplayDataProcessUser from "./Components/ProductGetApi/DisplayDataProcessUser/DisplayDataProcessUser";
-import ContainerService from "./Components/ProductGetApi/components/ContainerService/ContainerService";
-import StaffSchedule from "./Components/ProductGetApi/components/StaffSchedule/StaffSchedule";
-//  import CheckSelect from "./Components/ProductGetApi/components/CheckSelect";
-import Contact from "./Components/ProductGetApi/components/Contact/Contact";
-import ManageStaff from "./Components/ProductGetApi/components/AccountManage/ManageStaff";
-import ManageCustomer from "./Components/ProductGetApi/components/AccountManage/ManageCustomer";
-import Cost from "./Components/ProductGetApi/components/Cost/Cost";
+import Cart from "./Components/components/mainpages/Cart/Cart";
+import Services from "./Components/components/Service/Services";
+import Login from "./Components/components/mainpages/auth/Login";
+import Register from "./Components/components/mainpages/auth/Register";
+import NotFound from "./Components/components/utils/not_found/NotFound"
+import DetailService from "./Components/components/detailService/DetailService";
+import OrderHistory from "./Components/components/history/OrderHistory"
+import OrderDetails from "./Components/components/history/OrderDetails";
+import Categories from "./Components/components/categories/Categories";
+import CreateService from "./Components/components/createService/CreateService";
+import BookingSystem from "./Components/components/BookingSystem/BookingSystem";
+import DetailCDPU from "./Components/components/CreateDataProcessUser/DetailCDPU";
+import Account from "./Components/components/AccountManage/Account";
+import Bookinghtr from "./Components/components/Bookinghtr/Bookinghtr";
+import DashBoard from "./Components/components/DashBoard/DashBoard";
+import CreateDataProcessUser from "./Components/components/CreateDataProcessUser/CreateDataProcessUser";
+import DisplayDataProcessUser from "./Components/DisplayDataProcessUser/DisplayDataProcessUser";
+import ContainerService from "./Components/components/ContainerService/ContainerService";
+import StaffSchedule from "./Components/components/StaffSchedule/StaffSchedule";
+//  import CheckSelect from "./Components/ServiceGetApi/components/CheckSelect";
+import Contact from "./Components/components/Contact/Contact";
+import ManageStaff from "./Components/components/AccountManage/ManageStaff";
+import ManageCustomer from "./Components/components/AccountManage/ManageCustomer";
+import Cost from "./Components/components/Cost/Cost";
+import ContactTable from "./Components/components/ManageContact/ContactTable";
 export default function App() {
   const location = useLocation();
-  const state = useContext(Cart2);
+  const state = useContext(Service);
   const [isLogged] = state.userAPI.isLogged;
   const [isAdmin] = state.userAPI.isAdmin;
   const [isStaff]= state.userAPI.isStaff;
   return (
     <div>
       <Routes location={location} key={location.pathname}>
-        <Route path="/" element={<Product2 />} />
+        <Route path="/" element={<Services />} />
         {/* <Route path="/contact" element={<Contact />} /> */}
         <Route path="/bookingsystem" element={<BookingSystem />} />
         <Route path="/containerservice" element={<ContainerService />} />
-        <Route path="/products" element={<Product2 />} />
-        <Route path="/detail/:id" exact element={<DetailProduct />} />
+        <Route path="/services" element={<Services />} />
+        <Route path="/detail/:id" exact element={<DetailService />} />
         <Route path="/login" element={isLogged ? <NotFound /> : <Login />} />
          <Route path="/bookinghtr" element={<Bookinghtr />} />
          <Route path="/dashboard" element={<DashBoard />} />
@@ -54,7 +55,8 @@ export default function App() {
          <Route path="/displaydataprocessuser" element={<DisplayDataProcessUser />} />
        
         <Route path="/staffschedule" element={<StaffSchedule />} />
-
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/contacttable" element={<ContactTable />} />
         <Route
           path="/register"
           element={isLogged ? <NotFound /> : <Register />}
@@ -67,7 +69,6 @@ export default function App() {
           path="/history/:id"
           element={isLogged ? <OrderDetails /> : <NotFound />}
         />
-        <Route path="/cart2" element={<Cart3 />} />
         <Route path="*" exact element={<NotFound />} />
         <Route
           path="/category"
@@ -76,9 +77,9 @@ export default function App() {
         />
        
         <Route
-          path="/create_product"
+          path="/create_service"
           exact
-          element={isAdmin ? <CreateProduct /> : <NotFound />}
+          element={isAdmin ? <CreateService /> : <NotFound />}
         />
         <Route
           path="/accountcreatecompany"
@@ -91,9 +92,14 @@ export default function App() {
           element={(isAdmin||isStaff) ? <DetailCDPU /> : <NotFound />}
         />
         <Route
-          path="/edit_product/:id"
+          path="/managecustomer/update_process/:id"
           exact
-          element={isAdmin ? <CreateProduct /> : <NotFound />}
+          element={(isAdmin||isStaff) ? <DetailCDPU /> : <NotFound />}
+        />
+        <Route
+          path="/edit_service/:id"
+          exact
+          element={isAdmin ? <CreateService /> : <NotFound />}
         />
       </Routes>
     </div>

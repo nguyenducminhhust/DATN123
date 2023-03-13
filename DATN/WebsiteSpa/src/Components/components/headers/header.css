@@ -1,0 +1,357 @@
+header {
+    height: 90px;
+    /* width: 100%; */
+    /* overflow: hidden; */
+    display: flex;
+    /* flex-wrap: wrap; */
+    justify-content: space-between;
+    align-items: center;
+    /* border: 5px solid #f78550; */
+    background: #ec170f ;
+    /* padding: 0 2rem; */
+    color: black;
+}
+*{
+    margin:0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Times New Roman', Times, serif;
+}
+.navbar1{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 100px;
+    background-color: #2593d3;   
+    color: white;
+    width: 100%;
+}
+.logo1{
+    font-size: 20px;
+    text-decoration: none !important;
+    color: white;
+    font-weight: bold;
+}
+.logo1:hover{
+    /* background-color: rgb(16, 42, 161); */
+    color: rgb(231, 228, 29);
+}
+.nav-links1{
+    display: flex;
+    justify-content: flex-end;
+    list-style: none;
+    width: max-content;
+    height: 100%;
+    border-bottom: none;
+    align-items: center;
+    margin-top: 10px;
+    /* border: 2px solid black; */
+} 
+nav-item1{
+    
+}
+.nav-links1:hover {
+    /* border-bottom: 4px solid #fff; */
+    transition: all 0.2s ease-out;
+    color: red;
+  }
+/* .contacts1, */
+.dashboard1,
+.dataprocesscustomer,
+.accountcreatecompany,
+.createservice,
+.category,
+.staffschedule,
+.displaydataprocessuser,
+.containerservice1,
+.bookinghtr,
+.bookingsystem,
+.history,
+.managecost,
+.contacttable,
+.logout{
+    text-decoration: none !important;
+    color: rgb(255, 255, 255);
+    font-size: 17px;
+    padding: 5px 9px;
+    margin: 0 10px;
+    cursor: pointer;
+    width: max-content;
+   font-weight: bold;
+   /* border: 2px solid rgb(247, 230, 4); */
+   border-radius: 5px;
+   /* position: relative; */
+   /* background-color: #ec170f; */
+   /* justify-content: space-around !important; */
+   /* background-color: #103fbe ; */
+}
+.dropdown-list{
+    /* list-style-type: none !important; */
+    
+    position: absolute;
+    z-index: 9999;
+    cursor: grab;
+    width: 100px;
+    margin-top: 30px;
+    /* margin-left: -10px; */
+    /* border: 2px solid rgb(247, 230, 4); */
+    border-radius: 5px;
+    background-color: rgb(221, 130, 20);
+    align-items: center;
+    display: relative;
+    justify-content: space-around;
+    padding: 0;
+    /* float: left; */
+}
+.contacts1{
+    color: rgb(255, 255, 255) !important;
+    text-decoration: none !important;
+}
+.nav-item1{
+    
+    
+    font-size: 20px;
+    padding: 5px 9px;
+    margin: 0 10px;
+    cursor: pointer;
+    width: max-content;
+     font-weight: bold;
+   /* border: 2px solid rgb(247, 230, 4); */
+   border-radius: 5px;
+   display: flex;
+   justify-content: space-around;
+   position: relative;
+}
+
+.testlinkoke{
+    /* width: 100%; */
+    /* background-color: bisque; */
+    /* position: relative; */
+    border-top:  2px solid black;
+    width: 100%;
+    /* align-items: center; */
+    display: flex;
+    justify-content: space-around;
+    position: relative;
+    /* float: left; */
+    color: rgb(255, 255, 255) !important;
+    text-decoration: none !important;
+    list-style-type: none;
+}
+/* .contacts1{
+    color: rgb(255, 255, 255) !important;
+    text-decoration: none !important;
+} */
+/* .contacts1,
+.dashboard1,
+.dataprocesscustomer,
+.accountcreatecompany,
+.createproduct, 
+.category,
+.staffschedule,
+.displaydataprocessuser,
+.containerservice,
+.bookinghtr,
+.bookingsystem,
+.history,
+.logout 
+ li:hover{
+    color: rgb(226, 23, 23) !important;
+   
+} */
+/* .headercontainer{
+   
+    display: flex;
+    
+    align-items: center;
+    margin-right:40px ;
+    min-width: 1400px;
+    justify-content: center ;
+    height: 100px;
+}
+
+.cartmenu{
+    margin-left: 10px;
+}
+header .logo a {
+    opacity: 0.9;
+    margin-left: 40px;
+    display: flex;
+    border-radius: 15px ;
+    padding: 5px;
+    min-width: 120px;
+    min-height: 40px;
+    align-items: center;
+    font-size: 40px;
+}   
+
+header a {
+    text-transform: uppercase;
+    color: #ffffff;
+    text-decoration:none;
+    font-size: 20px;
+    font-family:  'Arial', Helvetica, sans-serif;
+    font-size: 10px;
+    font-weight:700;
+}
+
+header a:hover{
+    color: rgb(17, 243, 205)
+}
+.infomenubar{
+    align-items: center;
+    display: flex;
+    height: 90px;
+    justify-content: space-around;
+}
+.infomenubarchild{
+    align-items: center;
+    
+    display: flex;
+    height: 80px;
+}
+.infomenubarchild ul{
+    padding-left: 0px;
+    display: flex;
+    height: 50px;
+    margin-top:20px ;
+    max-width:max-content;
+    justify-content: space-around;
+    align-items: center;
+    list-style: none;
+    
+}
+.headercontainer .infomenubarchild  li{
+    
+    display: inline-block;
+    opacity: 0.9;
+    padding: 0 20px;
+    font-size: 20px;
+    border-radius: 15px ;
+    margin-left: 5px;
+    margin-right: 5px;
+}.headercontainer .infomenubarchild  a:hover{
+    color: rgb(231, 26, 214)
+   
+}
+
+
+header ul li:hover {
+    opacity: 1;
+}
+
+.menu {
+    display: none;
+}
+*/
+.cart-icon {
+    position: relative;
+    margin-right: 20px;
+    /* z-index: 11111; */
+}
+ 
+.cart-icon span {
+    background: crimson;
+    border-radius: 20px;
+    color: white;
+    position: relative;
+    top: -10px;
+    right: -13px;
+    padding: 5px 7px;
+    font-size: 15px;
+
+}
+.cart-icon i{
+    color: #ffffff;
+    font-size: 20px;
+   
+}
+.login1{
+    border: 2px solid yellow;
+    border-radius: 5px;
+    text-decoration: none !important;
+    color: rgb(255, 255, 255);
+    font-size: 22px;
+    padding: 10px 20px;
+    margin: 0 10px;
+    cursor: pointer;
+    width: max-content;
+   font-weight: bold;
+}
+.login1:hover{
+    background-color: rgb(16, 42, 161);
+    color: white;
+}
+/* .cartdisplay{
+    z-index: 9999;
+} */
+.mobile-menu-icon{
+    display: none;
+}
+@media screen and (max-width: 780px) {
+    .log{
+        display: flex;
+        position: absolute;
+        top: 15px;
+        left: 35px;
+    }
+    .nav-links1{
+        display: none;
+    }
+    .nav-links-mobile{
+        position: absolute;
+        display: block;
+        list-style: none;
+        background-color: #005469;
+        left: 0;
+        top:75px;
+        transition: all 0.5s ease-out;
+        width: 100%;
+    }
+
+.contacts1,
+.dashboard1,
+.dataprocesscustomer,
+.accountcreatecompany,
+.createservice,
+.category,
+.staffschedule,
+.displaydataprocessuser,
+.containerservice1,
+.bookinghtr,
+.bookingsystem,
+.history,
+.logout,
+.managecost,
+.contacttable,
+.login1{
+    /* text-decoration: none !important; */
+    color: rgb(255, 255, 255);
+    font-size: 18px;
+    padding: 32px;
+    margin: 0 10px;
+    cursor: pointer;
+    width: max-content;
+    font-weight: bold;
+    transition: all 0.5s ease-out;
+    text-align: center;
+    border-top: none !important;
+}
+    .login1{
+        border: none;
+    }
+    .mobile-menu-icon{
+            display: block;
+            position: absolute;
+            color: white;
+            font-size: 30px;
+            background-color: transparent;
+            border: none;
+            outline: none;
+            top: 30px;
+            right: 30px;
+}
+    .cart-icon{
+        display: none;
+    }
+}

@@ -196,7 +196,7 @@ const userCtrl = {
   //     return res.status(500).json({ msg: err.message });
   // }
   },
-  getAllStaff: async(req, res) => {
+  getAllUser: async(req, res) => {
     try {
         const user = await Users.find().select("-password");
         res.json(user);

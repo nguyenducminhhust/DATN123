@@ -6,7 +6,7 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../node_modules/font-awesome/css/font-awesome.min.css";
-import { DataProvider } from "./Components/ProductGetApi/GlobalState";
+import { DataProvider } from "./Components/GlobalState";
 ReactDOM.render(
   <BrowserRouter>
    

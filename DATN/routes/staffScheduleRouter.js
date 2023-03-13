@@ -10,4 +10,5 @@ router
   .route("/staffschedule/:id") 
   .delete(staffScheduleCtrl.deleteStaffSchedule)
 router.route("/staffschedule").put(staffScheduleCtrl.updateStaffSchedule);
+router.route("/staffschedule").patch(staffScheduleCtrl.updateLostTimeNumber);
 module.exports = router;

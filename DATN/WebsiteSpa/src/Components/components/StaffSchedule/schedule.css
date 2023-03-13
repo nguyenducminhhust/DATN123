@@ -1,0 +1,12 @@
+.tableschedule{
+  margin: auto;
+  margin-left: 100px;
+  margin-top: 100px;
+}
+.tableschedule table, .tableschedule th, .tableschedule td{
+    border: 1px solid black;
+}
+.staffschedulecontainer{
+    display: flex;
+    /* border: 1px solid black; */
+}

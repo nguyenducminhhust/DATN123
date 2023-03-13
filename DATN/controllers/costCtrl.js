@@ -53,7 +53,7 @@ const costCtrl = {
         unitprice,
         amount } = req.body;
       await Costs.findOneAndUpdate(
-        { _id: req.params.id },
+        { productid: req.body.productid },
         {
             productid, 
             productname,

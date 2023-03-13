@@ -15,13 +15,12 @@ const containerserviceCtrl = {
       const { 
         serviceid,
         email,
-        
-       
         //detailprocess,
         timebought,
         paymentid,
         servicename,
         totalsession,
+        status,
        } = req.body;
       // const containerservice = await ContainerService.findOne({ serviceid });
       // if (containerservice)
@@ -37,6 +36,7 @@ const containerserviceCtrl = {
         paymentid,
         servicename,
         totalsession,
+        status,
       });
 
       await newContainerService.save();

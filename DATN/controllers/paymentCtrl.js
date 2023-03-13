@@ -1,6 +1,6 @@
 const Payments = require("../models/paymentModel");
 const Users = require("../models/userModel");
-const Products = require("../models/productModel");
+const Services = require("../models/serviceModel");
 
 const PaymentCtrl = {
   getPayment: async (req, res) => {
@@ -16,7 +16,7 @@ const PaymentCtrl = {
       const user = await Users.findById(req.user.id).select("name email");
       if (!user) return res.status(400).json({ msg: "User does not exist." });
 
-      const { cart, paymentID, address } = req.body;
+      const { cart, paymentID, address, status } = req.body;
 
       const { _id, name, email } = user;
 
@@ -27,14 +27,15 @@ const PaymentCtrl = {
         cart,
         paymentID,
         address,
+        status,
       });
 
       cart.filter((item) => {
         return sold(item._id, item.quantity, item.sold);
       });
-      cart.filter((item) => {
-        return stock(item._id, item.quantity, item.stock);
-      });
+      // cart.filter((item) => {
+      //   return stock(item._id, item.quantity, item.stock);
+      // });
 
       await newPayment.save();
       res.json({ msg: "Payment Succes!" });
@@ -42,21 +43,31 @@ const PaymentCtrl = {
       return res.status(500).json({ msg: err.message });
     }
   },
+  updateStatus: async (req, res) => {
+    try {
+            await Payments.findOneAndUpdate(
+            { paymentID: req.body.paymentID },
+            {
+                status: req.body.status,
+            }
+        );
+        res.json({ msg: "Updated Status" });
+    } catch (err) {
+        return res.status(500).json({ msg: err.message });
+    }
+  },
 };
 
 const sold = async (id, quantity, oldSold) => {
-  await Products.findOneAndUpdate(
+  await Services.findOneAndUpdate(
     { _id: id },
     {
       sold: quantity + oldSold,
     }
   );
 };
-const stock = async (id, quantity,oldStock)=>{
-  await Products.findOneAndUpdate(
-    {_id:id},{
-       stock: oldStock - quantity,
-    }
-  )
-}
+
+
+
+
 module.exports = PaymentCtrl;

@@ -7,7 +7,7 @@ router.get("/refresh_token", userCtrl.refreshToken);
 router.post("/login", userCtrl.login);
 router.get("/logout", userCtrl.logout);
 router.get("/infor", auth, userCtrl.getUser); 
-router.get("/userstaff", userCtrl.getAllStaff);
+router.get("/alluser", userCtrl.getAllUser);
 router.put("/updatestaff", userCtrl.updateStaff);
 router.patch("/addcart", auth, userCtrl.addCart);
 router.patch("/addservicebought",auth, userCtrl.addServiceBought);

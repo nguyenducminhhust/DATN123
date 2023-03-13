@@ -1,0 +1,18 @@
+.maincontacttable{
+    margin: auto;
+    justify-content: center;
+    width: max-content;
+    margin-top: 20px;
+   
+}
+.maincontacttable h2{
+    text-align: center;
+}
+.contacttable table,.contacttable th, .contacttable td{
+    border: 1px solid black;
+    color: black;
+}
+.paginatecontacttable{
+    display: flex;
+    justify-content: center;
+}
