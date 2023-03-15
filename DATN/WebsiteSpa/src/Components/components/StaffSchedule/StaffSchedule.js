@@ -160,7 +160,6 @@ export default function StaffSchedule() {
                 )
               )
               }
-
             </tbody>
           </table>
         </div>

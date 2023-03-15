@@ -10,6 +10,7 @@ header {
     background: #ec170f ;
     /* padding: 0 2rem; */
     color: black;
+    width: 100%;
 }
 *{
     margin:0;
@@ -73,7 +74,7 @@ nav-item1{
     text-decoration: none !important;
     color: rgb(255, 255, 255);
     font-size: 15px;
-    padding: 5px 5px;
+    padding: 5px 2px;
     margin: 0 10px;
     cursor: pointer;
     width: max-content;

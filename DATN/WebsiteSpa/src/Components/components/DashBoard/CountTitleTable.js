@@ -19,7 +19,8 @@ useEffect(() => {
     // Chuyển đổi từ object sang mảng và sắp xếp theo thứ tự giảm dần của số lượng
     const counts = Object.keys(countObj).map(title => ({ title, count: countObj[title] }));
     counts.sort((a, b) => b.count - a.count);
-    setTitleCounts(counts);
+    const topFive = counts.slice(0, 5);
+    setTitleCounts(topFive);
   }, [arr]);
   return (
     <div className="tabletop5service">

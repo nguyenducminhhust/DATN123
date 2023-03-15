@@ -26,6 +26,7 @@ export default function DashBoard() {
   const [exportcost, setExportCost]= state.exportAPI.exportcost;
   const [test, setTest] = useState(false);
   
+  
   const totaluserdebt = ()=>{
     let totaldebt =0;
     allUser.forEach(au=>
@@ -160,8 +161,17 @@ export default function DashBoard() {
       });
       return total;
   }
-  console.log(endDate);
-
+  //// xử lý role
+  const [role0] = useState(
+    allUser.filter((user) => {
+      return user.role === 0;
+    })
+  );
+  const [role2] = useState(
+    allUser.filter((user) => {
+      return user.role === 2;
+    })
+  );
   // Xử lý Line
   const [exportbyselectdate, setExportBySelect] = useState(exportcost);
 
@@ -270,12 +280,15 @@ export default function DashBoard() {
             </div>
             </div>
             <div className="piechartdashboard">
-            <h5>Doanh thu từ ngày {(startDate.getDate())}/{(startDate.getMonth()+1)}/{(startDate.getFullYear())} đến
+            <h5>  Doanh thu từ ngày {(startDate.getDate())}/{(startDate.getMonth()+1)}/{(startDate.getFullYear())} đến
              ngày {(endDate.getDate())}/{(endDate.getMonth()+1)}/{(endDate.getFullYear())} là : 
             {ishowrevenuebyday&&(revenuebyselectday())}$</h5>
-            <h5>Tổng tiền chưa thanh toán của khách hàng: {totaluserdebt()} $</h5>
-            <h5>Tổng tiền số tiền hàng nhập vào: {totalimport} $</h5>
-            <h5>Tổng tiền số tiền hàng xuất ra: {totalexport} $</h5>
+            <h5>  Tổng tiền chưa thanh toán của khách hàng: {totaluserdebt()} $</h5>
+            <h5>  Tổng tiền số tiền hàng nhập vào: {totalimport} $</h5>
+            <h5>  Tổng tiền số tiền hàng xuất ra: {totalexport} $</h5>
+            <h5>  Tổng số khách hàng: {role0.length}</h5>
+            <h5>  Tổng số nhân viên: {role2.length}</h5>
+
              {(ishowrevenuebyday) && 
            ( <Pie data={data} />)}
             </div>

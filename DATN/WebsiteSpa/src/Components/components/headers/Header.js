@@ -67,7 +67,7 @@ export default function Header() {
         className={isMobile? "nav-links-mobile" : "nav-links1"}
         onClick={()=> setIsMobile(false)}
         >
-              <Link to="/privateinformation" className="bookinghtr">  <li>Thông tin cá nhân</li></Link>
+        <Link to="/privateinformation" className="bookinghtr">  <li>Thông tin cá nhân</li></Link>
 
        {(isStaff)&&( <Link to="/staffschedule" className="staffschedule"> <li>Lịch Nhân Viên</li> </Link>)}
        {(isStaff)&&( <Link to="/managecustomer" className="dataprocesscustomer"> <li>QL Khách Hàng</li> </Link>
