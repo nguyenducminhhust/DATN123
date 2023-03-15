@@ -14,7 +14,17 @@ export default function Exportcost() {
         amount:0,
      }]);
      const [cost, setCost]= state.costAPI.costs;
-
+     const [callback, setCallback] = useState(false);
+     useEffect(() => {
+        const getCosts = async () => {
+          const res = await axios.get(
+            `/api/costs`
+          );
+          setCost(res.data);
+          
+        };
+        getCosts();
+      }, [callback]); 
     const handleInputForExportcost = (e, index, ) => {
         const { name, value } = e.target;
         const list = [...inputinforexportcost];
@@ -27,14 +37,14 @@ export default function Exportcost() {
         list[index][name] = amount;
         setInputInforExportcost(list);
       };
-      // handle click event of the Remove button
+      // xử lý sự kiện nhấp chuột của nút Xóa
       const handlePriceRemoveClick = index => {
         const list = [...inputinforexportcost];
         list.splice(index, 1);
         setInputInforExportcost(list);
       };
     
-      // handle click event of the Add button
+      // xử lý sự kiện click của nút Thêm
       const handlePriceAddClick = () => {
         setInputInforExportcost([...inputinforexportcost, { 
         productid: "", 
@@ -50,31 +60,35 @@ export default function Exportcost() {
         const { name, value } = e.target;
         const productinfo = checkProductID(value);
         const list = [...inputinforexportcost];
-        // list[index][name] = value;
         list[index].productid = productinfo[0].productid;
         list[index].productname = productinfo[0].productname;
         list[index].unit = productinfo[0].unit;
         list[index].unitprice = productinfo[0].unitprice;
         setInputInforExportcost(list);
       }
+      // tạo phiếu xuất kho
       const exportcostSubmit = async (e) => {
         e.preventDefault();
         try {
             for(let i=0; i<inputinforexportcost.length;i++){
-                const productinfo = checkProductID(inputinforexportcost[i].productid);
+            const productinfo = checkProductID(inputinforexportcost[i].productid);
+            // số lượng mới
             const newquantity = parseInt(productinfo[0].quantity) - parseInt(inputinforexportcost[i].quantity);
+            // tổng tiền mới
             const newamount = parseInt(productinfo[0].amount)-parseInt(inputinforexportcost[i].quantity*inputinforexportcost[i].unitprice);
             const quantity = parseInt(inputinforexportcost[i].quantity);
             const exportID= `id${new Date().getTime()}`;
+            if(newquantity>=0&&newamount>=0){
             await axios.put("/api/costs", 
             {...inputinforexportcost[i], quantity: newquantity,
               amount: newamount});
-          
+              setCallback(!callback);
         await axios.post("/api/exports", 
           {...inputinforexportcost[i], quantity: quantity,exportid:exportID,
             amount:inputinforexportcost[i].quantity*inputinforexportcost[i].unitprice });
-
-        alert("Xuất kho thành công");}
+            alert("Xuất kho thành công"); 
+        } else { alert("Số lượng không hợp lệ"); }
+        }
         } catch (err) {
           alert(err.response.data.msg);
         }
@@ -170,15 +184,12 @@ export default function Exportcost() {
                                         {inputinforexportcost.length - 1 === i && <button onClick={handlePriceAddClick}>Thêm </button>}
                                     </div>
                                     </td>
- 
-                                        
-                                   
                                     </tr>    
                                 );
                             })}
                         </tbody>
                     </table>
-                    <div><button type="submit">Nhập</button></div>
+                    <div><button type="submit">Xuất Hàng</button></div>
                 </form>
             </div>
 </>

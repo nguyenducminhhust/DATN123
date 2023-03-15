@@ -11,7 +11,7 @@ export default function Categories() {
   const [callback, setCallback] = state.categoriesAPI.callback;
   const [onEdit, setOnEdit] = useState(false);
   const [id, setID] = useState("");
-
+  // Tạo danh mục
   const createCategory = async (e) => {
     e.preventDefault();
     try {
@@ -41,13 +41,13 @@ export default function Categories() {
       alert(err.response.data.msg);
     }
   };
-
+  // sửa danh mục
   const editCategory = async (id, name) => {
     setID(id);
     setCategory(name);
     setOnEdit(true);
   };
-
+  // xóa danh mục
   const deleteCategory = async (id) => {
     try {
       const res = await axios.delete(`/api/category/${id}`, {
@@ -75,7 +75,7 @@ export default function Categories() {
             onChange={(e) => setCategory(e.target.value)}
           />
 
-          <button type="submit">{onEdit ? "Update" : "Create"}</button>
+          <button type="submit">{onEdit ? "Cập Nhật" : "Tạo"}</button>
         </form>
 
         <div className="col">

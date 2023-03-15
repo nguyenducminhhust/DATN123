@@ -20,7 +20,6 @@ const serviceSchema = new mongoose.Schema(
     },
     durationtime: {
       type: Number,
-      // required: true,
       default:0,
     },
     description: {
@@ -47,11 +46,6 @@ const serviceSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
-   
-    // timebought:{
-    //   type: Number,
-    //   default:1,
-    // },
   },
   {
     timestamps: true, //important

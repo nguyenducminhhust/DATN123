@@ -4,6 +4,7 @@ import axios from "axios";
 export default function ContactAPI() {
   const [contact, setContact] = useState([]);
   const [callback, setCallback] = useState(false);
+  //Lấy dữ liệu liên hệ
   useEffect(() => {
     const getContact = async () => {
       const res = await axios.get("/api/contacts");

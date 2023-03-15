@@ -4,7 +4,6 @@ import { Service } from "../../GlobalState";
 import ServiceItem from "./../Service/ServiceItem";
 import Header from "../headers/Header";
 import "./detailService.css";
-import Comment from "./Comment";
 import DetailPDSession from "./DetailSVSession";
 export default function DetailService() {
   const params = useParams();
@@ -15,7 +14,7 @@ export default function DetailService() {
   const [priceDisplay, setPriceDisplay]= useState(false);
   const [sessionUpdate, setSessionUpdate]= useState("0");
 
-  console.log(params);
+  // lấy dữ liệu dịch vụ
   useEffect(async() => {
     if (params.id) {
      await services.forEach((service) => {
@@ -24,12 +23,9 @@ export default function DetailService() {
         }
       });
     }
-    // 
   }, [params.id, services]);
-  //
-  // console.log({...detailService, price: priceDisplay, session: sessionUpdate});
-  // console.log(priceDisplay, typeof priceDisplay, sessionUpdate, typeof sessionUpdate);
   if (detailService.length === 0) return null;
+  // set chọn liệu trình
   const chooseSession =(price, session)=>{
     const priceint = parseInt(price,10);
     const sessionint = parseInt(session,10);
@@ -41,11 +37,12 @@ export default function DetailService() {
     <>
       <Header />
       <div className="detail">
-        <img src={detailService.images.url} alt="" />
+        <div className="infodetailservice">
+        <div className="imgandpricedetail"><img src={detailService.images.url} alt="" />
         <div className="box-detail">
           <div className="row_id">
-            <h2>{detailService.title}</h2>
-            <h6>#id: {detailService.service_id}</h6>
+            <h2 >{detailService.title}</h2><br/>
+            <h6 >#id: {detailService.service_id}</h6>
           </div>
         { priceDisplay &&( <div className="Session Type"> $ {priceDisplay}  </div>)}
             <p>Chọn liệu trình để xem giá cụ thể:</p>
@@ -57,49 +54,42 @@ export default function DetailService() {
           key={index}
           priceandsession={pr}
           chooseSession={chooseSession}
-          // containerservices= {containerservices}
-          // userdataprocess={userdataprocess}
           />
           )})}
-          </div>
-          <p className="linebreackp">{detailService.description}</p>
-          <text className="linebreackp">{detailService.content}</text>
-          {/* <p>Sold: {detailService.sold}</p> */}
-          {/* <p>Stock: {detailService.stock}</p> */}
-          <Link
+          
+         <div className="divbuyservicedteail"> 
+         <h5>Chọn liệu trình và mua ngay!</h5>
+         <Link
             to="/cart"
-            className="cart"
+            className="buttonbuyservice"
             onClick={() => addCart({...detailService, price: priceDisplay, session: sessionUpdate})}
           >
-            Buy Now
+           Mua Ngay
           </Link>
-          {/* {services.map((service) => {
-        return service._id === params.id ? (
-          <Link id="btn_view" to={`/detail/${service._id}`}>
-            View
-          </Link>
-        
-        ) : null;
-      })} */}
-          {/* <Link id="btn_view" to={`/detail/${service._id}`}>
-            View
-          </Link> */}
-        </div>
+          </div>
+          </div>
+          </div>
+          </div>
+          <div className="detailcontentservice">
+          <h2>Vấn đề:</h2>
+          <p className="linebreakp">{detailService.description}</p>
+          <h2>Giải pháp của Hà Nội Spa:</h2>
+          <text className="linebreakp1">{detailService.content}</text>
+          
+          </div>
       </div>
-     
-      {/* {services.map((service) => {
-        return service._id === params.id ? (
-          <Comment key={service._id} service={service} />
-        ) : null;
-      })} */}
+      </div>
       <div>
-        <h2>Dịch vụ liên quan:</h2>
+        
         <div className="relatedservice">
+        <h2>Dịch vụ liên quan:</h2>
+        <div className="relatedserviceinfor">
           {services.map((service) => {
             return service.category === detailService.category ? (
               <ServiceItem key={service._id} service={service} />
             ) : null;
           })}
+          </div>
         </div>
       </div>
     </>

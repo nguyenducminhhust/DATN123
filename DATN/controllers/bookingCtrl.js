@@ -1,7 +1,4 @@
 const Booking = require("../models/bookingModel");
-
-
-
 const bookingCtrl = {
   getBookings: async (req, res) => {
     try {
@@ -17,18 +14,11 @@ const bookingCtrl = {
         email,
         bookdate,
         service,
-       namecustomer,
-       phonenumber,
-       namestaff,
-       numbertime,
-
-     //  booknote,
-   
+        namecustomer,
+        phonenumber,
+        namestaff,
+        numbertime,
       } = req.body;
-     // if (!images) return res.status(400).json({ msg: "No image upload" });
-    //  const product = await Booking.findOne({ product_id });
-      // if (product)
-      //   return res.status(400).json({ msg: "This product already exists." });
       const newBooking = new Booking({
         email,
         bookdate,
@@ -37,11 +27,10 @@ const bookingCtrl = {
         phonenumber,
         namestaff,
         numbertime,
-      //  booknote,
       });
 
       await newBooking.save(); 
-      res.json({ msg: "Created a booking" });
+      res.json({ msg: "Đã đặt được lịch" });
     } catch (err) {
       return res.status(500).json({ msg: err.message });
     }
@@ -49,7 +38,7 @@ const bookingCtrl = {
   deleteBooking: async (req, res) => {
     try {
       await Booking.findByIdAndDelete(req.params.id);
-      res.json({ msg: "Deleted a Booking" });
+      res.json({ msg: "Đã xóa lịch đặt" });
     } catch (err) {
       return res.status(500).json({ msg: err.message });
     }
@@ -58,30 +47,24 @@ const bookingCtrl = {
     try {
       const { 
         email,
-          bookdate,
-     service,
-     //  namestaff,
-       namecustomer,
-       phonenumber,
-     //  booknote,
-     numbertime,
-       
+        bookdate,
+        service,
+        namecustomer,
+        phonenumber,
+        numbertime,
       } = req.body;
-     // if (!images) return res.status(400).json({ msg: "No image upload" });
       await Booking.findOneAndUpdate(
         { _id: req.params.id },
         {
           email,
-         bookdate,
-     service,
-     //  namestaff,
-       namecustomer,
-       phonenumber,
-       numbertime,
-     //  booknote,
+          bookdate,
+          service,
+          namecustomer,
+          phonenumber,
+          numbertime,
         }
       );
-      res.json({ msg: "Updated a Booking" });
+      res.json({ msg: "Đã cập nhật lịch đặt" });
     } catch (err) {
       return res.status(500).json({ msg: err.message });
     }

@@ -1,14 +1,15 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Service } from "../../GlobalState";
 import "./ManageStaff.css"
-export default function EditDebt({index,customerlist,onChangeInput,handleChangeInputRole,handleChangeInputRole2,handleCancelClick}) {
+export default function EditDebt({isAdmin,index,customerlist,onChangeInput,handleChangeInput,handleChangeInput2,handleCancelClick}) {
     const state = useContext(Service);
     const [serviceboughtlist,setServiceBoughtList]=state.containerserviceAPI.containerservice;
+    // Lọc danh sách liệu trình
     const totalservicebuycustomer = serviceboughtlist.filter((sbl)=>
     sbl.email ===customerlist.email
     );
-    
-    const takedetailsesstion=()=>{
+    // Lấy ra danh sách tổng số buổi của các liệu trình, tính tổng
+    const takedetailsession=()=>{
         let totalsessioncus =[];
         for(let i=0; i<totalservicebuycustomer.length; i++){
             const takedetailcesssion = totalservicebuycustomer[i].totalsession;
@@ -16,7 +17,7 @@ export default function EditDebt({index,customerlist,onChangeInput,handleChangeI
         }
         return totalsessioncus;
     }  
-    let totalsession=takedetailsesstion().reduce((total, value)=> total+parseInt(value),0);
+    let totalsession=takedetailsession().reduce((total, value)=> total+parseInt(value),0);
     
     return(
             <tr>
@@ -38,9 +39,22 @@ export default function EditDebt({index,customerlist,onChangeInput,handleChangeI
                 onChange={onChangeInput}
                         />
           </td>
+          <td> 
+                <textarea
+                type="text"
+                name="note"
+                
+                value={customerlist.note}
+                onChange={onChangeInput}
+                        />
+          </td>
             <td>
+            {(isAdmin)&&(
+                <>
                 <button className="savestaffbut" type="submit"> Lưu </button>
                 <button className="cancelstaffbut" type="button" onClick={handleCancelClick}> Hủy</button>
+                
+                </>)}
             </td>         
             </tr>
     )

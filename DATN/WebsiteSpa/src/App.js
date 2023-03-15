@@ -18,15 +18,14 @@ import Account from "./Components/components/AccountManage/Account";
 import Bookinghtr from "./Components/components/Bookinghtr/Bookinghtr";
 import DashBoard from "./Components/components/DashBoard/DashBoard";
 import CreateDataProcessUser from "./Components/components/CreateDataProcessUser/CreateDataProcessUser";
-import DisplayDataProcessUser from "./Components/DisplayDataProcessUser/DisplayDataProcessUser";
 import ContainerService from "./Components/components/ContainerService/ContainerService";
 import StaffSchedule from "./Components/components/StaffSchedule/StaffSchedule";
-//  import CheckSelect from "./Components/ServiceGetApi/components/CheckSelect";
 import Contact from "./Components/components/Contact/Contact";
 import ManageStaff from "./Components/components/AccountManage/ManageStaff";
 import ManageCustomer from "./Components/components/AccountManage/ManageCustomer";
 import Cost from "./Components/components/Cost/Cost";
 import ContactTable from "./Components/components/ManageContact/ContactTable";
+import PrivateInformation from "./Components/components/PrivateInformation/PrivateInformation";
 export default function App() {
   const location = useLocation();
   const state = useContext(Service);
@@ -37,26 +36,22 @@ export default function App() {
     <div>
       <Routes location={location} key={location.pathname}>
         <Route path="/" element={<Services />} />
-        {/* <Route path="/contact" element={<Contact />} /> */}
         <Route path="/bookingsystem" element={<BookingSystem />} />
         <Route path="/containerservice" element={<ContainerService />} />
         <Route path="/services" element={<Services />} />
         <Route path="/detail/:id" exact element={<DetailService />} />
         <Route path="/login" element={isLogged ? <NotFound /> : <Login />} />
-         <Route path="/bookinghtr" element={<Bookinghtr />} />
-         <Route path="/dashboard" element={<DashBoard />} />
-         <Route path="/contact" element={<Contact />} />
-         <Route path="/cost" element={<Cost />} />
-         <Route path="/dataprocesscustomer" element={<CreateDataProcessUser />} />
-         {/* <Route path="/checkselect" element={<CheckSelect />} /> */}
-       <Route path="/managestaff" element={isAdmin ? <ManageStaff /> : <NotFound />} />
-       <Route path="/managecustomer" element={isAdmin ? <ManageCustomer /> : <NotFound />} />
-
-         <Route path="/displaydataprocessuser" element={<DisplayDataProcessUser />} />
-       
+        <Route path="/bookinghtr" element={<Bookinghtr />} />
+        <Route path="/dashboard" element={<DashBoard />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/cost" element={<Cost />} />
+        <Route path="/dataprocesscustomer" element={<CreateDataProcessUser />} />
+        <Route path="/managestaff" element={isAdmin ? <ManageStaff /> : <NotFound />} />
+        <Route path="/managecustomer" element={(isAdmin || isStaff) ? <ManageCustomer /> : <NotFound />} />
         <Route path="/staffschedule" element={<StaffSchedule />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/contacttable" element={<ContactTable />} />
+        <Route path="/privateinformation" element={<PrivateInformation />} />
         <Route
           path="/register"
           element={isLogged ? <NotFound /> : <Register />}
@@ -75,7 +70,6 @@ export default function App() {
           exact
           element={isAdmin ? <Categories /> : <NotFound />}
         />
-       
         <Route
           path="/create_service"
           exact
@@ -89,12 +83,12 @@ export default function App() {
         <Route
           path="/dataprocesscustomer/update_process/:id"
           exact
-          element={(isAdmin||isStaff) ? <DetailCDPU /> : <NotFound />}
+          element={(isAdmin || isStaff) ? <DetailCDPU /> : <NotFound />}
         />
         <Route
           path="/managecustomer/update_process/:id"
           exact
-          element={(isAdmin||isStaff) ? <DetailCDPU /> : <NotFound />}
+          element={(isAdmin || isStaff) ? <DetailCDPU /> : <NotFound />}
         />
         <Route
           path="/edit_service/:id"

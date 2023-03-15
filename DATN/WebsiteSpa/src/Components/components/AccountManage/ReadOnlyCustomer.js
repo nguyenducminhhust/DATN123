@@ -1,16 +1,19 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Service } from "../../GlobalState";
 import "./ManageStaff.css"
-export default function ReadOnlyCustomer({ index, customerlist, handleEditClick,handleDeleteClick }) {
+export default function ReadOnlyCustomer({ isAdmin,index, customerlist, handleEditClick,handleDeleteClick }) {
     const state = useContext(Service);
     const [serviceboughtlist,setServiceBoughtList]=state.containerserviceAPI.containerservice;
+        // Lọc danh sách liệu trình
     const totalservicebuycustomer = serviceboughtlist.filter((sbl)=>
     sbl.email ===customerlist.email
     );
+        // Lọc thanh toán
     const [payment]= state.paymentAPI.payment;
     const filteruser = payment.filter((al)=>
         al.email==customerlist.email
-    );    
+    );   
+         // Lấy ra danh sách tổng số buổi của các liệu trình, tính tổng
     const takedetailsesstion=()=>{
         let totalsessioncus =[];
         for(let i=0; i<totalservicebuycustomer.length; i++){
@@ -20,7 +23,7 @@ export default function ReadOnlyCustomer({ index, customerlist, handleEditClick,
         return totalsessioncus;
     }  
     let totalsession=takedetailsesstion().reduce((total, value)=> total+parseInt(value),0);
-    
+        // Tính tổng chi tiêu các đơn hàng đã kích hoạt
     const totalspend = () => {
         let total = 0;
         filteruser.forEach(element => {
@@ -41,12 +44,15 @@ export default function ReadOnlyCustomer({ index, customerlist, handleEditClick,
                 <td>{totalspend()} $</td>
                 <td>{totalsession}</td>
                 <td>{customerlist.debt}</td>
-                <td></td>
+                <td>{customerlist.note}</td>
                 <td>
+                {(isAdmin)&&(
+                <>   
                     <button className="editstaffbut" type="button" onClick={(event)=> handleEditClick(event, customerlist)}
                     > Sửa</button>
                     <button className="deletestaffbut" type="button" onClick={()=> handleDeleteClick(customerlist)}
-                    > Xóa</button>
+                    > Xóa</button> </>
+                )}
                 </td>
             </tr>
           

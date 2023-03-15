@@ -20,7 +20,7 @@ const costCtrl = {
       } = req.body;
       const cost = await Costs.findOne({ productid });
       if (cost)
-        return res.status(400).json({ msg: "This Cost already exists." });
+        return res.status(400).json({ msg: "Mẫu sản phẩm đã tồn tại." });
       const newCost = new Costs({
         productid, 
         productname,
@@ -31,7 +31,7 @@ const costCtrl = {
       });
 
       await newCost.save(); 
-      res.json({ msg: "Created a Cost" });
+      res.json({ msg: "Đã" });
     } catch (err) {
       return res.status(500).json({ msg: err.message });
     }
@@ -39,7 +39,7 @@ const costCtrl = {
   deleteCost: async (req, res) => {
     try {
       await Costs.findByIdAndDelete(req.params.id);
-      res.json({ msg: "Deleted a Cost" });
+      res.json({ msg: "Đã xóa mẫu sản phẩm" });
     } catch (err) {
       return res.status(500).json({ msg: err.message });
     }
@@ -64,7 +64,7 @@ const costCtrl = {
         }
       );
       console.log(req.params);
-      res.json({ msg: "Updated a Cost" });
+      res.json({ msg: "Đã cập nhật mẫu sản phẩm" });
     } catch (err) {
       return res.status(500).json({ msg: err.message });
     }

@@ -16,6 +16,7 @@ const initialState = {
   debt: 0,
   totalservicebuycustomer:0,
   _id:0,
+  note:"",
 };
 export default function ManageCustomer() {
     const state = useContext(Service);
@@ -23,64 +24,36 @@ export default function ManageCustomer() {
     const [customerdata, setCustomerData] = useState(
       initialState
     );
+    const [isAdmin]= state.userAPI.isAdmin;
+    //Lọc khách hàng
     const customerlist= alluser.filter((alus)=>
     alus.role ===0);   
     const [handlestt, setHandleSTT]=useState(false);
+    // phân trang
     const itemsPerPage = 5;
     const [itemOffset, setItemOffset] = useState(0);
     const [editcustomer, setEditCustomer]= useState(null);
     const endOffset = itemOffset + itemsPerPage;
-    console.log(`Loading items from ${itemOffset} to ${endOffset}`);
     const currentItems = customerlist.slice(itemOffset, endOffset);
     const pageCount = Math.ceil(customerlist.length / itemsPerPage);
     const handlePageClick = (event) => {
       const newOffset = (event.selected * itemsPerPage) % customerlist.length;
-      
-      console.log(
-        `User requested page number ${event.selected}, which is offset ${newOffset}`
-      );
       setHandleSTT(event.selected);
       setItemOffset(newOffset);
     };
     const onChangeInput = (e) => {
       const { name, value } = e.target;
-      //console.log(name, value);
       setCustomerData({ ...customerdata, [name]: value });
     };
     
-    const handleChangeInputRole = (e) => {
+    const handleChangeInput = (e) => {
       let { name, value } = e.target;
-      //console.log(name, value);
       value = parseInt(value);
       setCustomerData({ ...customerdata, [name]: value });
-      
-      // if (!e.target.value) {
-      //   setSelect([]);
-      //   return;
-      // }
-  
-      // if (select.includes(e.target.value)) {
-      //   setSelect((value) => value.filter((val) => val !== e.target.value));
-      // } else {
-      //   setSelect(e.target.value);
-      // }
     };
-    const handleChangeInputRole2 = (e) => {
+    const handleChangeInput2 = (e) => {
       const { name, value } = e.target;
-      //console.log(name, value);
       setCustomerData({ ...customerdata, [name]: value });
-      // console.log(name, typeof name, value, typeof value);
-      // console.log(user);
-      // if (!e.target.value) {
-      //   setSelect([]);
-      //   return;
-      // }
-  
-      // if (select.includes(e.target.value)) {
-      //   setSelect((value) => value.filter((val) => val !== e.target.value));
-      // } else {
-      //   setSelect(e.target.value);
-      // }
     };
   const handleEditClick = (event, stl)=>{
       event.preventDefault();
@@ -89,13 +62,13 @@ export default function ManageCustomer() {
         name: stl.name,
         email: stl.email,
         phonenumber:stl.phonenumber,
-        // totalservicebuycustomer: stl.totalservicebuycustomer,
-        // totalsession: 0,
         debt: stl.debt,
         _id: stl._id,
+        note:stl.note,
       }
       setCustomerData(formvalue);
   }
+  console.log(isAdmin);
   const handleCancelClick = (event, stl)=>{
       event.preventDefault();
       setEditCustomer(null);
@@ -105,7 +78,7 @@ export default function ManageCustomer() {
    
       try {
         const param = staffid._id;
-          await axios.delete(`/user/deleteuser/${param}`, {_id: staffid._id}); //images
+          await axios.delete(`/user/deleteuser/${param}`, {_id: staffid._id}); 
          
         alert("Successful Delete!");
         window.location.reload();
@@ -113,18 +86,14 @@ export default function ManageCustomer() {
         alert(err.response.data.msg);
       }
   }
-  // console.log(test);
   const editformSubmit = async (e) => {
       e.preventDefault();
       const handledebt = customerdata.debt;
+      const handlenote =customerdata.note;
       const _id = customerdata._id;
       try {
-          await axios.patch("/user/modifydebt", { _id, handledebt}); //images
-          // console.log(user);
-          // setUser({...initialState} );
-          // setText("Created Succes");
-          // setChecked(true);
-        alert("Success update!");
+          await axios.patch("/user/modifydebt", { _id, handledebt,handlenote});
+        alert("Cập nhật thành công!");
         window.location.reload();
 
       } catch (err) {
@@ -159,16 +128,18 @@ export default function ManageCustomer() {
                          <Fragment>
                             { editcustomer === stl._id ? 
                             (<EditDebt
+                              isAdmin={isAdmin}
                               index={handlestt?(index+handlestt*itemsPerPage):(index)}
                               customerlist={customerdata}
                                  onChangeInput={onChangeInput}
-                                handleChangeInputRole={handleChangeInputRole}
-                                handleChangeInputRole2={handleChangeInputRole2}
+                                handleChangeInput={handleChangeInput}
+                                handleChangeInput2={handleChangeInput2}
                                 handleCancelClick={handleCancelClick}
                                 
                                 />):
                              ( <ReadOnlyCustomer 
                               key={index}
+                              isAdmin={isAdmin}
                               index={index+handlestt*itemsPerPage}
                               customerlist={stl} 
                               handleEditClick={handleEditClick}
@@ -183,8 +154,8 @@ export default function ManageCustomer() {
             </form>
             <div className="paginatemanagecustomer">
               <ReactPaginate
-          previousLabel="Previous"
-          nextLabel="Next"
+          previousLabel="Trước"
+          nextLabel="Sau"
           pageClassName="page-item"
           pageLinkClassName="page-link"
           previousClassName="page-item"
@@ -204,7 +175,8 @@ export default function ManageCustomer() {
        </div>
        
 </div>
-<div> <CreateDataProcessUser/></div>
+<div className="viewdatacustomer">Xem Dữ Liệu Khách Hàng:</div>
+<div>  <CreateDataProcessUser/></div>
 </>
 )
 }

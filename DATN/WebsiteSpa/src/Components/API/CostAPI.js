@@ -4,7 +4,7 @@ import axios from "axios";
 export default function CostAPI() {
   const [costs, setCosts] = useState([]);
   const [callback, setCallback] = useState(false);
-
+  // Lấy dữ liệu Hàng trong kho
   useEffect(() => {
     const getCosts = async () => {
       const res = await axios.get(

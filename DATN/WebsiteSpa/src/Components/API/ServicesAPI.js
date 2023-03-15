@@ -9,15 +9,12 @@ export default function ServicesAPI() {
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
   const [result, setResult] = useState(0);
-
+  // Lấy dữ liệu dịch vụ
   useEffect(() => {
     const getServices = async () => {
       const res = await axios.get(
         `/api/services?${category}&${sort}&title[regex]=${search}` 
-        //limit=${page *8}&
       );
-      console.log(res);
-      console.log(res.data.services);
       setServices(res.data.services);
       setResult(res.data.result);
     };
@@ -36,4 +33,3 @@ export default function ServicesAPI() {
     result: [result, setResult],
   };
 }
-// node server.js

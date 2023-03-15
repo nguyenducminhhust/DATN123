@@ -19,17 +19,14 @@ const userSchema = new mongoose.Schema(
     role: {
       type: Number,
       default: 0,
-      // required: true,
     },
     service: {
       type: String,
       default: "",
-      // required: true,
     },
     kindofstaff: {
       type: String,
       default: "",
-      // required: true,
     },
     cart: {
       type: Array,
@@ -42,15 +39,13 @@ const userSchema = new mongoose.Schema(
     phonenumber: {
       type: Number,
       trim: true,
-      //required,
     },
     salary: {
       type: Number,
       
     },
-    balance:{
-      type: Number,
-      default: 0,
+    note:{
+      type: String,
 
     },
     debt:{

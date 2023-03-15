@@ -22,3 +22,21 @@
 .searchinput{
     width: 550px;
 }
+.buttonsearch{
+    padding: 5px 10px;
+    border-radius: 7px;
+    font-size: 18px;
+    font-weight: 700;
+    background-color: rgb(64, 170, 240);
+    color: rgb(247, 238, 228);
+}
+.buttonsearch:hover{
+    background-color: rgb(25, 159, 248);
+    color: rgb(250, 220, 187);
+    
+}
+.buttonsearch:active{
+    background-color: rgb(15, 139, 221);
+    color: rgb(250, 220, 187);
+    
+}

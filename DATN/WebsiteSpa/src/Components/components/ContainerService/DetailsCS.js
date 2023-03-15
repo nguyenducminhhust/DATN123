@@ -7,17 +7,28 @@ import { Link } from "react-router-dom";
 import DetailSession from "./DetailSession";
 // import "./ContainerService.css";
 import "./detailsCS.css"
-export default function DetailsCS({userdata, containerservices, userdataprocess}) {
+export default function DetailsCS({userdata}) {
+  const state = useContext(Service);
+  const [token] = state.token;
   const [isshowinfo, setisShowInfo] = useState(false);
   const [useridinfo, setUserIdinfo] = useState({
     useridinfos: "",
   });
- 
+  const [containerservices, setContainerServices] = state.containerserviceAPI.containerservice;
+  const [callback, setCallBack] = state.containerserviceAPI.callback;
   const [ischeck, setIsCheck] = useState(false);
-  const [ischeck2, setIsCheck2] = useState(false);
   const [datashow, setDataShow] = useState([]);
-  const [findsessionprocess, setFSP] = useState();
-  const [datasessionaftercheck, setDSAC] = useState();
+  // Lấy dữ liệu liệu trình
+  useEffect(() => {
+    const getContainerServices = async () => {
+      const res = await axios.get("/api/containerservice");
+      console.log(res);
+      setContainerServices(res.data);
+    };
+
+    getContainerServices();
+  }, [callback]);
+  // set thông tin liệu trình, hiển thị thông tin
   const showinfo1 = (userdataid) => {
     setUserIdinfo({ useridinfos: userdataid });
     const findDataServiceUser = containerservices.filter((cs) =>
@@ -25,50 +36,11 @@ export default function DetailsCS({userdata, containerservices, userdataprocess}
     )
     setDataShow(findDataServiceUser);
     setisShowInfo(!isshowinfo);
+    setCallBack(!callback);
   };
   const isShow = () => {
     setIsCheck(!ischeck);
   };
-  // const isCheckInfoSession = () => {
-  //   const pushprocess =findsessionprocess;
-  //   setDSAC(pushprocess);
-  // };
-  const filterProcessUser=(e, serviceid)=>{
-   const  value = e;
-   let pushprocess;
-    const findprocessuser= containerservices.filter((cs)=>
-        cs.serviceid ===serviceid
-  );
-    //const takedetailprocess = findprocessuser[0].detailprocess;
-    // const findsessionprocess = takedetailprocess.filter((tdp)=>
-    // tdp.session===value
-    // )
-    for(let i=0; i<findprocessuser.length; i++){
-      const checkarrayprocess= findprocessuser[i];
-      const checkdetailprocesslength=checkarrayprocess.detailprocess.length;
-      for(let i=0; i<checkdetailprocesslength; i++){
-        const findsessionprocess = checkarrayprocess.detailprocess;
-        if(findsessionprocess[i].session===value){
-        // { pushprocess =findsessionprocess[i];
-        //   setDSAC(pushprocess);
-          setFSP(true); 
-          setIsCheck2(true);
-        } else{setFSP(false);}
-         //setFSP(findsessionprocess[i]);
-        //  setFSP(findsessionprocess);
-      }
-      //  setFSP(checkdetailprocesslength);
-    }
-   // const pushprocess =findsessionprocess;
-    //setDSAC(pushprocess);
-}
-const checktruefalse =(e)=>{
-  const {value} = e.target;
-  if(value<5){ setFSP(true);}
-  else {setFSP(false);}
-}
-console.log(findsessionprocess, userdata);
-
     return (
       <div className="inforcontainerservice">
         <div className="imgandbutcontainer">
@@ -86,6 +58,7 @@ console.log(findsessionprocess, userdata);
               && ischeck
               && (<DetailSession
                 key={index}
+                index={index}
                 dtshow={dtshow}
                 containerservices={containerservices}
               />)

@@ -15,23 +15,15 @@ const containerserviceCtrl = {
       const { 
         serviceid,
         email,
-        //detailprocess,
         timebought,
         paymentid,
         servicename,
         totalsession,
         status,
        } = req.body;
-      // const containerservice = await ContainerService.findOne({ serviceid });
-      // if (containerservice)
-      //   return res.status(400).json({ msg: "This containerservice already exists." });
-
       const newContainerService = new ContainerService({  
         serviceid,
-        email,
-        
-        
-       // detailprocess,
+        email,        
         timebought, 
         paymentid,
         servicename,
@@ -40,7 +32,7 @@ const containerserviceCtrl = {
       });
 
       await newContainerService.save();
-      res.json({ msg: "Created a containerservice" });
+      res.json({ msg: "Tạo liệu trình thành công" });
     } catch (err) {
       return res.status(500).json({ msg: err.message });
     }
@@ -48,7 +40,7 @@ const containerserviceCtrl = {
   deleteContainerService: async (req, res) => {
     try {
       await ContainerService.findByIdAndDelete(req.params.id);
-      res.json({ msg: "Deleted a containerservice" });
+      res.json({ msg: "Đã xóa liệu trình" });
     } catch (err) {
       return res.status(500).json({ msg: err.message });
     }
@@ -57,24 +49,20 @@ const containerserviceCtrl = {
     try {
       const { serviceid,
         email,
-       // detailprocess,
         timebought, 
         paymentid, } = req.body;
       await ContainerService.findOneAndUpdate({ _id: req.params.id }, { serviceid,
         email,
-       // detailprocess,
         timebought, 
         paymentid, });
 
-      res.json({ msg: "Updated a containerservice" });
+      res.json({ msg: "Đã cập nhật liệu trình" });
     } catch (err) {
       return res.status(500).json({ msg: err.message });
     }
   },
     addDetailProcess: async (req, res) => {
     try {
-      // const dataprocesscustomer = await ContainerService.findById(req.params.id);
-      //  if (!dataprocesscustomer) return res.status(400).json({ msg: "User does not exist." });
       const cartlength = req.body.adddetailprocessinfo.length;
       for(let i=0; i<cartlength; i++){
       await ContainerService.findOneAndUpdate(
@@ -84,7 +72,7 @@ const containerserviceCtrl = {
         });
    
       }
-      return res.json({ msg: "Added success detail process" });
+      return res.json({ msg: "Đã thêm chi tiết liệu trình" });
     } catch (err) {
       return res.status(500).json({ msg: err.message });
     }

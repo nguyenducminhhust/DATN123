@@ -24,30 +24,23 @@ export default function ManageStaff() {
         initialState
       );
       const [token] = state.token;
-
+      // lọc ra danh sách nhân viên
     const stafflist= alluser.filter((alus)=>
     alus.role ===2);
-    
     const [handlestt, setHandleSTT]=useState(false);
-    const [callback, setCallBack]= useState(false);
+    const [callback, setCallBack]= state.alluserAPI.callback;
     const [editstaff, setEditStaff]= useState(null);
-    const [test, setTest]= useState(false);
+    // phân trang
     const itemsPerPage = 5;
   const [itemOffset, setItemOffset] = useState(0);
   const endOffset = itemOffset + itemsPerPage;
-  console.log(`Loading items from ${itemOffset} to ${endOffset}`);
   const currentItems = stafflist.slice(itemOffset, endOffset);
   const pageCount = Math.ceil(stafflist.length / itemsPerPage);
   const handlePageClick = (event) => {
     const newOffset = (event.selected * itemsPerPage) % stafflist.length;
-    
-    console.log(
-      `User requested page number ${event.selected}, which is offset ${newOffset}`
-    );
     setHandleSTT(event.selected);
     setItemOffset(newOffset);
   };
-
      useEffect(() => {
       const getAllUser = async() => {
         const res = await axios.get("/user/alluser");
@@ -55,46 +48,20 @@ export default function ManageStaff() {
     };
       getAllUser()
       }
-    , [token,setAllUser]);
+    , [token,setAllUser, callback]);
     const onChangeInput = (e) => {
         const { name, value } = e.target;
-        //console.log(name, value);
         setStaffData({ ...staffdata, [name]: value });
       };
       
-      const handleChangeInputRole = (e) => {
+      const handleChangeInput = (e) => {
         let { name, value } = e.target;
-        //console.log(name, value);
         value = parseInt(value);
         setStaffData({ ...staffdata, [name]: value });
-        
-        // if (!e.target.value) {
-        //   setSelect([]);
-        //   return;
-        // }
-    
-        // if (select.includes(e.target.value)) {
-        //   setSelect((value) => value.filter((val) => val !== e.target.value));
-        // } else {
-        //   setSelect(e.target.value);
-        // }
       };
-      const handleChangeInputRole2 = (e) => {
+      const handleChangeInput2 = (e) => {
         const { name, value } = e.target;
-        //console.log(name, value);
         setStaffData({ ...staffdata, [name]: value });
-        // console.log(name, typeof name, value, typeof value);
-        // console.log(user);
-        // if (!e.target.value) {
-        //   setSelect([]);
-        //   return;
-        // }
-    
-        // if (select.includes(e.target.value)) {
-        //   setSelect((value) => value.filter((val) => val !== e.target.value));
-        // } else {
-        //   setSelect(e.target.value);
-        // }
       };
     const handleEditClick = (event, stl)=>{
         event.preventDefault();
@@ -111,42 +78,34 @@ export default function ManageStaff() {
         }
         setStaffData(formvalue);
     }
+    // hủy thao tác
     const handleCancelClick = (event, stl)=>{
         event.preventDefault();
         setEditStaff(null);
     }
+    // xóa thông tin nhân viên
     const handleDeleteClick = async (staffid)=>{
-        // staffid.preventDefault();
-        // setTest(staffid);
         try {
           const param = staffid._id;
-            await axios.delete(`/user/deleteuser/${param}`, {_id: staffid._id}); //images
-            // console.log(user);
-            // setUser({...initialState} );
-            // setText("Created Succes");
-            // setChecked(true);
-          alert("Successful Delete!");
-          window.location.reload();
+            await axios.delete(`/user/deleteuser/${param}`, {_id: staffid._id});
+            setCallBack(!callback);
+          alert("Xóa thành công!");
         } catch (err) {
           alert(err.response.data.msg);
         }
     }
-    console.log(test);
+    // cập nhật thông tin nhân viên
     const editformSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.put("/user/updatestaff", { ...staffdata}); //images
-            // console.log(user);
-            // setUser({...initialState} );
-            // setText("Created Succes");
-            // setChecked(true);
-          alert("Success update!");
-          window.location.reload();
+            await axios.put("/user/updatestaff", { ...staffdata}); 
+            setEditStaff(null);
+            setCallBack(!callback);
+          alert("Cập nhật thành công!");
         } catch (err) {
           alert(err.response.data.msg);
         }
       };
-    console.log(stafflist);
     return( <>
       <Header/>
       <div className="titlemanagestaff">
@@ -177,10 +136,9 @@ export default function ManageStaff() {
                               index={handlestt?(index+handlestt*itemsPerPage):(index)}
                                 staffdata={staffdata}
                                 onChangeInput={onChangeInput}
-                                handleChangeInputRole={handleChangeInputRole}
-                                handleChangeInputRole2={handleChangeInputRole2}
+                                handleChangeInput={handleChangeInput}
+                                handleChangeInput2={handleChangeInput2}
                                 handleCancelClick={handleCancelClick}
-                                
                                 />):
                              ( <ReadOnlyStaff key={index} 
                                 index={index+handlestt*itemsPerPage}

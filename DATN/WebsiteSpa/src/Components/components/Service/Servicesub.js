@@ -4,22 +4,18 @@ import ReactPaginate from "react-paginate";
 import ServiceItem from "./ServiceItem";
 import "./Servicesub.css";
 export default function Servicesub({category,services,isAdmin,deleteService,handleCheck}) {
-    const filterservice= services.filter((pds)=>
+  // lọc dịch vụ theo danh mục  
+  const filterservice= services.filter((pds)=>
     pds.category ==category.name
     );
-    console.log(services);
+    // phân trang
     const itemsPerPage=3;
     const [itemOffset, setItemOffset] = useState(0);
     const endOffset = itemOffset + itemsPerPage;
-    console.log(`Loading items from ${itemOffset} to ${endOffset}`);
     const currentItems = filterservice.slice(itemOffset, endOffset);
     const pageCount = Math.ceil(filterservice.length / itemsPerPage);
-
     const handlePageClick = (event) => {
       const newOffset = (event.selected * itemsPerPage) % filterservice.length;
-      console.log(
-        `User requested page number ${event.selected}, which is offset ${newOffset}`
-      );
       setItemOffset(newOffset);
     };    
     return(
@@ -42,8 +38,8 @@ export default function Servicesub({category,services,isAdmin,deleteService,hand
       </div>
       <div className="containerpaginate">
         <ReactPaginate
-            previousLabel="Previous"
-            nextLabel="Next"
+            previousLabel="Trước"
+            nextLabel="Sau"
             pageClassName="page-item"
             pageLinkClassName="page-link"
             previousClassName="page-item"

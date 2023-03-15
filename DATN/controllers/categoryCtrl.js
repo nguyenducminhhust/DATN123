@@ -12,17 +12,15 @@ const categoryCtrl = {
   },
   createCategory: async (req, res) => {
     try {
-      // if user have role = 1 ---> admin
-      // only admin can create , delete and update category
       const { name } = req.body;
       const category = await Category.findOne({ name });
       if (category)
-        return res.status(400).json({ msg: "This category already exists." });
+        return res.status(400).json({ msg: "Danh mục này đã tồn tại." });
 
       const newCategory = new Category({ name });
 
       await newCategory.save();
-      res.json({ msg: "Created a category" });
+      res.json({ msg: "Đã tạo 1 danh mục mới" });
     } catch (err) {
       return res.status(500).json({ msg: err.message });
     }
@@ -32,11 +30,11 @@ const categoryCtrl = {
       const services = await Services.findOne({ category: req.params.id });
       if (services)
         return res.status(400).json({
-          msg: "Please delete all services with a relationship.",
+          msg: "Vui lòng xóa tất cả các quan hệ của danh mục.",
         });
 
       await Category.findByIdAndDelete(req.params.id);
-      res.json({ msg: "Deleted a Category" });
+      res.json({ msg: "Đã xóa danh mục" });
     } catch (err) {
       return res.status(500).json({ msg: err.message });
     }
@@ -46,7 +44,7 @@ const categoryCtrl = {
       const { name } = req.body;
       await Category.findOneAndUpdate({ _id: req.params.id }, { name });
 
-      res.json({ msg: "Updated a category" });
+      res.json({ msg: "Đã cập nhật danh mục" });
     } catch (err) {
       return res.status(500).json({ msg: err.message });
     }

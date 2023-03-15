@@ -6,42 +6,26 @@ import axios from "axios";
 import { Line } from "react-chartjs-2";
 import { Pie } from "react-chartjs-2";
 import { Chart as ChartJS } from "chart.js/auto";
-import 'react-date-range/dist/styles.css'; // main style file
-import 'react-date-range/dist/theme/default.css'; // theme css file
+import 'react-date-range/dist/styles.css'; 
+import 'react-date-range/dist/theme/default.css'; 
 import { Calendar } from 'react-date-range';
 import { DateRangePicker } from 'react-date-range';
 import { element } from "prop-types";
-
+import CountTitleTable from "./CountTitleTable";
 export default function DashBoard() {
   const state = useContext(Service);
   const [token] = state.token
-  const [allpayment, setAllPayment] = useState();
-  const [callback, setCallBack] = useState(false);
   const [payment] = state.paymentAPI.payment;
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [services]= state.servicesAPI.services;
   const [categories]= state.categoriesAPI.categories;
-  console.log(services, categories);
-  const [callback1, setCallback1] = useState(false);
   const [allUser, setAllUser]= state.alluserAPI.alluser;
   const [ishowrevenuebyday, setIsShowRevenueByDay]= useState(false);
-  //   useEffect(() => {
-  //   const getPayment = async () => {
-  //     const res = await axios.get("/api/payment");
-  //     console.log(res);
-  //     setPayment(res.data);
-  //   };
-
-  //   getPayment();
-  // }, [callback1]);
-  //  const [revenuebyyear, setrevenuebyyear] = useState(false);
-  const [datamonth, setDataMonth] = useState([]);
+  const [cost, setCost]= state.costAPI.costs;
+  const [exportcost, setExportCost]= state.exportAPI.exportcost;
   const [test, setTest] = useState(false);
-  const [datamonthlength, setDataMonthLength] = useState([]);
-  const revenuebyyear = payment.filter((al) =>
-    new Date(al.createdAt).getFullYear() === new Date().getFullYear()
-  );
+  
   const totaluserdebt = ()=>{
     let totaldebt =0;
     allUser.forEach(au=>
@@ -51,12 +35,6 @@ export default function DashBoard() {
       );
       return totaldebt;
   }
-  //   const arr2 = payment.map(item => {      // hàm quan trọng
-  //     return item.cart.map(i => i.price);
-  //   });
-  //   const arr2 = payment.map(el => el.cart.map(el => el.price));
-  // const totalrevenuebyyear= arr2.reduce((total, value)=> total+value,0)
-  // console.log(getPrice(revenuebyyear));
   const sumPrice = (payment) => {
     let ab = 0;
     payment.forEach(element => {
@@ -66,6 +44,7 @@ export default function DashBoard() {
     });
     return ab;
   };
+  // tính doanh thu tháng trong năm
   const revenuebymonth = (month, year) => {
     const getdatamonth = payment.filter((al) =>
       new Date(al.createdAt).getMonth() + 1 === month &&
@@ -81,20 +60,7 @@ export default function DashBoard() {
     return total;
 
   }
-  console.log(endDate.getFullYear(), typeof endDate.getFullYear());
-  
-  const getServiceSoldByCategory = (category) =>services
-      .filter((service) => service.category === category)
-      .map((service) => service.sold)
-      .reduce((accumulator, value) => accumulator + value, 0);
-
-  
-
-  // const dataServiceSoldByCategory = categories.map((category) =>
-  //   getServiceSoldByCategory(category.name)
-  // );
-  
-
+  // tính doanh thu ngày trong tháng
   const revenuebyday = (day, month, year) => {
     const getdataday = payment.filter((al) =>
       new Date(al.createdAt).getDate()=== day &&
@@ -110,7 +76,6 @@ export default function DashBoard() {
     return total;
 
   }
-  console.log(revenuebymonth(1));
   let DataRevenueForLineMonth = [
     { month: "Jan", revenue: revenuebymonth(1, endDate.getFullYear()) },
     { month: "Feb", revenue: revenuebymonth(2, endDate.getFullYear()) },
@@ -159,13 +124,6 @@ export default function DashBoard() {
     { day: "31", revenue: revenuebyday(31, endDate.getMonth(), endDate.getFullYear()) },
 
   ];
-//   const DataRevenueForLineDay = [];
-
-// for (let i = 1; i <= 31; i++) {
-//   DataRevenueForLineDay.push({ day: i.toString(), revenue: revenuebyday(i, endDate.getMonth(), endDate.getFullYear()) });
-// }
-  console.log(DataRevenueForLineMonth);
-
   let [revenuedata, setRevenueData] = useState({
     labels: DataRevenueForLineMonth.map((drfl) => drfl.month),
     datasets: [
@@ -192,19 +150,22 @@ export default function DashBoard() {
     key: "selection",
   }
   const [paymentbyselectdate, setPaymentBySelect] = useState(payment);
-
+  // tính doạn thu theo ngày chọn
   const revenuebyselectday =()=>{  
-      let ab = 0;
+      let total = 0;
       paymentbyselectdate.forEach(element => {
         element.cart.forEach(item => {
-          ab += item.price;
+          total += item.price;
         });
       });
-      return ab;
+      return total;
   }
   console.log(endDate);
 
   // Xử lý Line
+  const [exportbyselectdate, setExportBySelect] = useState(exportcost);
+
+  // xử lý khoảng thời gian chọn
   const handleSelect = (date) => {
     setTest(date);
     let paymentselect = payment.filter((payment) => {
@@ -216,9 +177,19 @@ export default function DashBoard() {
         paymentdate <= currentDate)
       )
     })
+    let exportselect = exportcost.filter((exportcost) => {
+      let exporttdate = new Date(exportcost.createdAt);
+      let currentDate = new Date(date.selection.endDate); 
+      currentDate.setDate(currentDate.getDate() + 1); 
+      return (
+        (exporttdate >= date.selection.startDate &&
+          exporttdate <= currentDate)
+      )
+    })
     setStartDate(date.selection.startDate);
     setEndDate(date.selection.endDate);
     setPaymentBySelect(paymentselect);
+    setExportBySelect(exportselect)
     setIsShowRevenueByDay(true);
     setRevenueData({
       labels: DataRevenueForLineMonth.map((drfl) => drfl.month),
@@ -242,28 +213,28 @@ export default function DashBoard() {
     });
 
   }
-  console.log(paymentbyselectdate);
   const countcategory = (category)=>{
     let count=0;
-    paymentbyselectdate.forEach((pbsd)=>
+    paymentbyselectdate.forEach((pbsd)=>{
+    if(pbsd.status){
     pbsd.cart.forEach((item)=>{
-        if(item.category==category){
+        
+      if(item.category==category){
           count +=1;
         }
       
-    })
+    }
     )
+  }})
+    
     return count;
   }
   const dataServiceSoldByCategory = categories.map((category) =>
          countcategory(category.name)
   );
-  console.log(dataServiceSoldByCategory);
   const color = dataServiceSoldByCategory.map(
     () => "#" + Math.floor(Math.random() * 16777215).toString(16)
   );
-  console.log(dataServiceSoldByCategory);
-
   const data = {
     labels: categories.map((category) => category.name),
     datasets: [
@@ -276,8 +247,15 @@ export default function DashBoard() {
       },
     ],
   };
-  console.log(paymentbyselectdate, test);
-  // console.log(to)
+  const totalimport = cost.reduce((accumulator, currentValue) => {
+    return accumulator + currentValue.amount;
+  }, 0); 
+    const totalexport = exportbyselectdate.reduce((accumulator, currentValue) => {
+      return accumulator + currentValue.amount;
+    }, 0); 
+
+
+    
   return (
     <>
       <Header />
@@ -291,17 +269,31 @@ export default function DashBoard() {
             <div className="linedatabyday"><Line data={revenuedatabyday} />
             </div>
             </div>
-            <div className="piechartdashboard"> 
-            <h2>Doanh thu từ ngày {(startDate.getDate())}/{(startDate.getMonth()+1)}/{(startDate.getFullYear())}  đến ngày {(endDate.getDate())}/{(endDate.getMonth()+1)}/{(endDate.getFullYear())} là : {ishowrevenuebyday&&(revenuebyselectday())}$</h2>
-            <h2>Tổng tiền chưa thanh toán của khách hàng: {totaluserdebt()} $</h2>
+            <div className="piechartdashboard">
+            <h5>Doanh thu từ ngày {(startDate.getDate())}/{(startDate.getMonth()+1)}/{(startDate.getFullYear())} đến
+             ngày {(endDate.getDate())}/{(endDate.getMonth()+1)}/{(endDate.getFullYear())} là : 
+            {ishowrevenuebyday&&(revenuebyselectday())}$</h5>
+            <h5>Tổng tiền chưa thanh toán của khách hàng: {totaluserdebt()} $</h5>
+            <h5>Tổng tiền số tiền hàng nhập vào: {totalimport} $</h5>
+            <h5>Tổng tiền số tiền hàng xuất ra: {totalexport} $</h5>
              {(ishowrevenuebyday) && 
            ( <Pie data={data} />)}
+            </div>
             <div className="daterange">
-            <DateRangePicker
+            <div className="daterangeselect"><DateRangePicker
               ranges={[selectionRange]}
               onChange={handleSelect}
-            /></div>
-            </div>       
+            />
+            </div>
+            <hr/>
+
+            <div className="top5service">
+            <h4>Top 5 sản dịch vụ bán được từ ngày {(startDate.getDate())}/{(startDate.getMonth()+1)}/{(startDate.getFullYear())} đến
+             ngày {(endDate.getDate())}/{(endDate.getMonth()+1)}/{(endDate.getFullYear())}</h4>
+            <CountTitleTable arr={paymentbyselectdate} />
+              </div>  
+            </div>
+            
             </div>
           </div>
         </div>

@@ -13,6 +13,18 @@ export default function ManageCost() {
         amount:0,
      }]);
      const [cost, setCost]= state.costAPI.costs;
+     const [callback, setCallback] = useState(false);
+     useEffect(() => {
+        const getCosts = async () => {
+          const res = await axios.get(
+            `/api/costs`
+          );
+          
+          setCost(res.data);
+          
+        };
+        getCosts();
+      }, [callback]); 
     const handleInputForManageCost = (e, index ) => {
         const { name, value } = e.target;
         const list = [...inputinformanagecost];
@@ -25,14 +37,14 @@ export default function ManageCost() {
         list[index][name] = amount;
         setInputInforManageCost(list);
       };
-      // handle click event of the Remove button
+      // xử lý sự kiện nhấp chuột của nút Xóa
       const handlePriceRemoveClick = index => {
         const list = [...inputinformanagecost];
         list.splice(index, 1);
         setInputInforManageCost(list);
       };
     
-      // handle click event of the Add button
+      // xử lý sự kiện click của nút Thêm
       const handlePriceAddClick = () => {
         setInputInforManageCost([...inputinformanagecost, { 
         productid: "", 
@@ -48,14 +60,13 @@ export default function ManageCost() {
         const { name, value } = e.target;
         const productinfo = checkProductID(value);
         const list = [...inputinformanagecost];
-        // list[index][name] = value;
         list[index].productid = productinfo[0].productid;
         list[index].productname = productinfo[0].productname;
         list[index].unit = productinfo[0].unit;
         list[index].unitprice = productinfo[0].unitprice;
         setInputInforManageCost(list);
       }
-      
+    // Tạo phiếu nhập
       const managecostSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -66,7 +77,7 @@ export default function ManageCost() {
             await axios.put("/api/costs", 
           {...inputinformanagecost[i], quantity: newquantity,
             amount: newamount});}
-          
+            setCallback(!callback);
         alert("Nhập kho thành công");
         } catch (err) {
           alert(err.response.data.msg);
@@ -105,7 +116,7 @@ export default function ManageCost() {
                                                 onChange={e=>handleCost(e, i)}
                                                 className="managecostpdid"
                                             >
-                                                <option value="default">Chọn Dịch Vụ</option>
+                                                <option value="default">Chọn sản phẩm</option>
                                                 {cost.map((cst, index) =>
                                                     <option value={cst.productid}>{`${index + 1}. ${cst.productid}`}</option>
                                                 )}

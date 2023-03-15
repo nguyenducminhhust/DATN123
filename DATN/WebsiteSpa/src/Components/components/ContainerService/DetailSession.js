@@ -5,69 +5,48 @@ import Header from "../headers/Header";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import "./detailsCS.css"
-export default function DetailSession({dtshow, containerservices}) {
+export default function DetailSession({index, dtshow, containerservices}) {
   const state = useContext(Service);
-  const [isshowinfo, setisShowInfo] = useState(false);
-  const [useridinfo, setUserIdinfo] = useState({
-    useridinfos: "",
-  });
   const [isAdmin] = state.userAPI.isAdmin;
   const [isStaff] = state.userAPI.isStaff;
   const [ischeck, setIsCheck] = useState(false);
   const [test, setTest]=useState(false);
-  const [datashow, setDataShow] = useState([]);
-  const [findsessionprocess, setFSP] = useState();
   const [datasessionaftercheck, setDSAC] = useState();
   const [payment, setPayment]= state.paymentAPI.payment;
-  // const [cs]=state.containerserviceAPI.containerservice;
-  const showinfo1 = (userdataid) => {
-    setUserIdinfo({ useridinfos: userdataid });
-    const findDataServiceUser = containerservices.filter((cs) =>
-      cs.serviceid === userdataid
-    )
-    setDataShow(findDataServiceUser);
-    setisShowInfo(!isshowinfo);
-  };
-  console.log(dtshow,containerservices);
-  const isShow = () => {
-    if(datasessionaftercheck){setIsCheck(true);}
-     else {setIsCheck(false);}
-    
-  };
-  // console.log(datasessionaftercheck);
   const [ischeck2, setIsCheck2] = useState(false);
-  const filterProcessUser= async(e, serviceid)=>{
-   const  value = parseInt(e); 
+  // Xử lý dữ liệu điều trị khách hàng theo buổi được chọn
+  const filterProcessUser= async(e, serviceid, index)=>{
+   const  {name, value} = e.target;
+   const value1 = parseInt(value)
    let pushprocess=[];
     const findprocessuser= containerservices.filter((cs)=>
         cs.serviceid ===serviceid
   );
-     //value, serviceid, 
-    for(let i=0; i<findprocessuser.length; i++){
-      const checkarrayprocess= findprocessuser[i].detailprocess;
-      pushprocess.push(checkarrayprocess);
-    }
-    const takelistpushprocess = pushprocess[0];
-    setTest(takelistpushprocess);
+  for(let i=0; i<findprocessuser.length; i++){
+    const checkarrayprocess= findprocessuser[i].detailprocess;
+    pushprocess.push(checkarrayprocess);
+  }
+  const takelistpushprocess = pushprocess[index];
+    setTest(findprocessuser);
     for(let i=0; i<takelistpushprocess.length; i++){
-    if(takelistpushprocess[i].session==value){
+    if(takelistpushprocess[i].session==value1){
       setDSAC(takelistpushprocess[i]);
-      
       setIsCheck(true);
       break;
     } else { setIsCheck(false);}
     }
     
-}
-console.log(test, typeof test);
+};
+// kích hoạt liệu trình sau khi khách thanh toán/ cọc
 const setActivePayment = async(dtshow)=>{
 
 await axios.patch("api/payment", {paymentID: dtshow.paymentid, status: true});
 alert("Update Status Sucesss")
-
 }
-const checkPaymentID = (payid)=> payment.filter((pay) => //Lọc ra  payment trong containerservice==payment id
+//Lọc ra  thanh toán trong containerservice==payment id
+const checkPaymentID = (payid)=> payment.filter((pay) => 
 pay.paymentID === payid );
+// trả về trạng thái của payment
 const statuspayment = (payid)=>{
   const checkpayment = checkPaymentID(payid);
   const status = checkpayment[0].status;
@@ -99,7 +78,7 @@ const statuspayment = (payid)=>{
               <select 
               className="selectprocess"
               name ="selectprocess"
-              onChange={e=> {filterProcessUser(e.target.value, dtshow.serviceid)}}
+              onChange={e=> {filterProcessUser(e, dtshow.serviceid, index)}}
               >
                 <option value="0">  Chọn buổi liệu trình </option>
                 {dtshow.detailprocess.map((dts, index)=>{

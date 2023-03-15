@@ -10,6 +10,7 @@ export default function OrderDetails() {
   const [orderDetails, setOrderDetails] = useState([]);
   const params = useParams();
   const [isAdmin] = state.userAPI.isAdmin;
+  // Lấy dữ liệu lịch sử đặt hàng
   useEffect(() => {
     if (params.id) {
       history.forEach((item) => {

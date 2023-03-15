@@ -6,7 +6,7 @@ const authStaff = async (req, res, next) => {
         _id: req.user.id,
       });
       if (user.role === 2)
-        return res.status(400).json({ msg: "Staff resources access denied" });
+        return res.status(400).json({ msg: "Quyền truy cập tài nguyên của nhân viên bị từ chối" });
   
       next();
     } catch (err) {

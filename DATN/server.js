@@ -5,7 +5,6 @@ const cors = require("cors");
 const fileUpload = require("express-fileupload");
 const cookieParser = require("cookie-parser");
 const path = require("path");
-
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
@@ -35,10 +34,7 @@ const URI = process.env.MONGODB_URL;
 mongoose.connect(
   URI,
   {
-    //useCreateIndex: true,
-    //useFindAndModify: false,
     useNewUrlParser: true,
-    // useUnifiedTopology: true,
   },
   (err) => {
     if (err) throw err;
@@ -52,7 +48,6 @@ if (process.env.NODE_ENV === "production") {
     res.sendFile(path.join(__dirname, "client", "build", "index.html"));
   });
 }
-
 app.get("/", (req, res) => {
   res.json({ msg: "helloo" });
 });

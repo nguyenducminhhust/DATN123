@@ -72,8 +72,8 @@ nav-item1{
 .logout{
     text-decoration: none !important;
     color: rgb(255, 255, 255);
-    font-size: 17px;
-    padding: 5px 9px;
+    font-size: 15px;
+    padding: 5px 5px;
     margin: 0 10px;
     cursor: pointer;
     width: max-content;

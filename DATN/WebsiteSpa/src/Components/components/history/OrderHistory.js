@@ -10,6 +10,7 @@ export default function OrderHistory() {
   const [history, setHistory] = state.userAPI.history;
   const [isAdmin] = state.userAPI.isAdmin;
   const [token] = state.token;
+  // Lấy toàn bộ dữ liệu đặt hàng nếu là Admin hoặc lấy dữ liệu đặt hàng riêng từng khách hàng
   useEffect(() => {
     if (token) {
       const getHistory = async () => {
@@ -34,19 +35,21 @@ export default function OrderHistory() {
       <Header />
       <div className="history-page">
         <h2>LỊCH SỬ MUA DỊCH VỤ</h2>
-        <h4>BẠN CÓ {history.length} ĐƠN HÀNG</h4>
+        <h4>TỔNG CÓ {history.length} ĐƠN HÀNG</h4>
 
         <table>
           <thead>
             <tr>
+              <th>STT</th>
               <th>Mã Thanh Toán ID</th>
               <th>Ngày Mua</th>
               <th> Xem Chi Tiết</th>
             </tr>
           </thead>
           <tbody>
-            {history.map((items) => (
+            {history.map((items, index) => (
               <tr key={items._id}>
+                <td>{index+1}</td>
                 <td>{items.paymentID}</td>
                 <td>{new Date(items.createdAt).toLocaleDateString()}</td>
                 <td>

@@ -4,18 +4,15 @@ const ContainerServiceSchema = new mongoose.Schema(
   {
     serviceid:{
       type: String,
-     // required: true,
       trim: true,
      
   },
   servicename:{
     type: String,
-   // required: true,
     trim: true,
 },
     email:{
     type: String,
-   // required: true,
     trim: true,
 },
     detailprocess :{

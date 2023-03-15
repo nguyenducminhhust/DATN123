@@ -22,11 +22,6 @@ const dataprocesscustomerCtrl = {
         service,
         dataprocesscustomerid,
       } = req.body;
-      //res.json(req.body);
-     // if (!images) return res.status(400).json({ msg: "No image upload" });
-    //  const product = await Booking.findOne({ product_id });
-      // if (product)
-      //   return res.status(400).json({ msg: "This product already exists." });
       const newDataProcessCustomer = new Dataprocesscustomer({
         
         session,
@@ -38,7 +33,7 @@ const dataprocesscustomerCtrl = {
       });
 
       await newDataProcessCustomer.save(); 
-      res.json({ msg: "Created a Dataprocesscustomer" });
+      res.json({ msg: "Tạo dữ liệu điều trị thành công" });
     } catch (err) {
       return res.status(500).json({ msg: err.message });
     }
@@ -46,7 +41,7 @@ const dataprocesscustomerCtrl = {
   deleteDataProcessCustomer: async (req, res) => {
     try {
       await Dataprocesscustomer.findByIdAndDelete(req.params.id);
-      res.json({ msg: "Deleted a Dataprocesscustomer" });
+      res.json({ msg: "Đã xóa dữ liệu điều trị" });
     } catch (err) {
       return res.status(500).json({ msg: err.message });
     }
@@ -54,18 +49,15 @@ const dataprocesscustomerCtrl = {
   updateDataProcessCustomer: async (req, res) => {
     try {
       const { 
-      //  dataprocesscustomerid,
         session,
         images,
         staff,
         daymake,
         service,
       } = req.body;
-     // if (!images) return res.status(400).json({ msg: "No image upload" });
       await Dataprocesscustomer.findOneAndUpdate(
         { _id: req.params.id },
         {
-            //dataprocesscustomerid,
             session,
             images,
             staff,
@@ -73,7 +65,7 @@ const dataprocesscustomerCtrl = {
             service,
         }
       );
-      res.json({ msg: "Updated a Dataprocesscustomer" });
+      res.json({ msg: "Đã cập nhật dữ liệu điều trị" });
     } catch (err) {
       return res.status(500).json({ msg: err.message });
     }

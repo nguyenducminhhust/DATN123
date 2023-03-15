@@ -4,22 +4,17 @@ import axios from "axios";
 import Header from "../headers/Header";
 import "./ContactTable.css";
 import ReactPaginate from "react-paginate";
-
+// Bảng liên hệ khách hàng
 export default function ContactTable() {
     const state = useContext(Service);
     const [contact, setContact]=state.contactAPI.contact;
     const itemsPerPage = 10;
     const [itemOffset, setItemOffset] = useState(0);
     const endOffset = itemOffset + itemsPerPage;
-    console.log(`Loading items from ${itemOffset} to ${endOffset}`);
     const currentItems = contact.slice(itemOffset, endOffset);
     const pageCount = Math.ceil(contact.length / itemsPerPage);
     const handlePageClick = (event) => {
       const newOffset = (event.selected * itemsPerPage) % contact.length;
-      
-      console.log(
-        `User requested page number ${event.selected}, which is offset ${newOffset}`
-      );
       setItemOffset(newOffset);
     };
     return(
@@ -46,7 +41,7 @@ export default function ContactTable() {
           <td>{index + 1}</td>
           <td>{ct.name}</td>
           <td>{ct.email}</td>
-          <td>{ct.phonenumber}</td>
+          <td>0{ct.phonenumber}</td>
           <td>{ct.title}</td>
           <td>{ct.content}</td>
         </tr>

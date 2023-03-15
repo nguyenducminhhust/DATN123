@@ -8,7 +8,8 @@ export default function UserAPI(token) {
   const [cart, setCart] = useState([]);
   const [history, setHistory] = useState([]);
   const [user, setUser] = useState([]);
-  const [userdataprocess, setUserDataProcess] = useState([]);   
+  const [userdataprocess, setUserDataProcess] = useState([]);
+  // Lấy dữ liệu người dùng, xét quyền quản trị viên hoặc nhân viên   
   useEffect(() => {
     if (token) {
       const getUser = async () => {
@@ -19,7 +20,6 @@ export default function UserAPI(token) {
           setIsLogged(true);
           res.data.role === 1 ? setIsAdmin(true) : setIsAdmin(false);
           res.data.role === 2 ? setIsStaff(true) : setIsStaff(false);
-          console.log(res);
           setCart(res.data.cart);
           setUserDataProcess(res.data.servicebought);
           setUser(res.data);
@@ -27,54 +27,23 @@ export default function UserAPI(token) {
           alert(err.response.data.msg);
         }
       };
-  
-
       getUser();
      
     }
   }, [token], [callback]);
-  console.log(cart);
-
-  // const addCart = async (service) => {
-  //   if (!isLogged) {
-  //     return alert("Please login to continue buying");
-  //   }
-  //   const check = cart.every((item) => {
-  //     return item.price !== service.price&&item.session!==service.session;
-  //   });
-  //   console.log(check);
-  //   if (check && service.stock!==0) {
-  //     console.log(service);
-  //     setCart([...cart, { ...service, quantity: 1, email: user.email  }]);
-  //     console.log(cart);
-  //     await axios.patch(
-  //       "/user/addcart",
-  //       { cart: [...cart, { ...service, quantity: 1,email: user.email }] },
-  //       {
-  //         headers: { Authorization: token },
-  //       }
-  //     );
-     
-  //     alert("Your service added to cart");
-  //   } else  if(service.stock==0){
-  //     alert("Out of Stock");
-  //   } else {
-  //     alert("This service has been added to cart");
-  //   }
-  // }
   const [checkdata, setCheckData] =useState(false);
+  // Thêm vào giỏ hàng
   const addCart = async (service) => {
     if (!isLogged) {
-      return alert("Please login to continue buying");
+      return alert("Vui lòng đăng nhập để tiếp tục mua hàng");
     }
+    // kiểm tra dịch vụ trong cart
     const check = cart.every((item) => {
       return item._id !== service._id;
     });
     setCheckData(check);
     if(!check){     // nếu đã có trong cart
       const findindex= cart.findIndex((cart)=> cart._id==service._id );
-      // const checkssion= cart[findindex].session+service.session;
-      // if(checkssion<25){
       cart[findindex].session+=service.session;
       cart[findindex].price+=service.price;
       const sessionadd = service.session.toString();
@@ -85,13 +54,9 @@ export default function UserAPI(token) {
         {
           headers: { Authorization: token },
         }
-        
       );
       alert(" Da them 1 lieu trinh");
-   // } 
-    //else{ alert(" Ban da dat gioi han session");}
-      
-    } //&& service.stock!==
+    } 
     else if (check ) { // chưa có trong cart
       console.log(service);
       const sessionToString = service.session.toString()+" Buổi";
@@ -104,13 +69,10 @@ export default function UserAPI(token) {
           headers: { Authorization: token },
         }
       );
-     
-      alert("Your Service added to cart");
-    } else  if(service.stock==0){
-      alert("Out of Stock");
+      alert("Dịch vụ của bạn đã được thêm vào giỏ hàng");
     } 
     else {
-      alert("This Service has been added to cart");
+      alert("Dịch vụ này đã được thêm vào giỏ hàng");
     }
   }
   
@@ -118,11 +80,11 @@ export default function UserAPI(token) {
     isLogged: [isLogged, setIsLogged],
     isAdmin: [isAdmin, setIsAdmin],
     isStaff:  [isStaff, setIsStaff],
-    cart: [cart, setCart],
-    addCart: addCart,  
+    cart: [cart, setCart], 
     history: [history, setHistory],
     user: [user, setUser],
     userdataprocess: [userdataprocess,setUserDataProcess],
     callback :[callback, setCallBack],
+    addCart: addCart, 
   };
 }

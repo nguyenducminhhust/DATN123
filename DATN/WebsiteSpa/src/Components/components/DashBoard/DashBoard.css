@@ -7,9 +7,10 @@ body {
 .dashboard {
     position: relative;
     width: 100%;
+    width: 1280px;
     min-height: 100vh;
     /* background-color: #cf1212; */
-    overflow: hidden;
+    display: flex;
 }
 .menu {
     position: absolute;
@@ -45,17 +46,15 @@ body {
     padding: 30px;
     box-sizing: border-box;
 }
-/* .contentdashboard{
-    display: flex;
-} */
+
 .linedatabymonth{
     width: 500px;
 }
 .linedatabyday{
-    width: 800px;
+    width: 650px;
 }
 .piechartdashboard{
-    width: 500px;
+    width: 370px;
    
 }
 .bottomdashboard{
@@ -64,10 +63,22 @@ body {
 .daterange{
     margin-left: 20px;
    margin-top: 20px;
+    width: 500px;
 }
 .pichartsize{
-    width:300px;
+    width:200px;
 }
 .revenueinfo{
-    margin-left: 500px;
+    margin-left: 550px;
+}
+.contentdashboard{
+    margin-left: 150px;
+    margin-top: 20px;
+}
+.top5service{
+    z-index: 9999;
+}
+.top5service{
+    margin-top: 50px;
+    width: 500px;
 }

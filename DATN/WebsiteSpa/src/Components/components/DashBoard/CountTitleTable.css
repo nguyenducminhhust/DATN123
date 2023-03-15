@@ -1,0 +1,7 @@
+.tabletop5service table{
+    min-width: 500px;
+    margin-top: 20px;
+}
+.tabletop5service table, .tabletop5service th, .tabletop5service td{
+border: 1px solid black;
+}

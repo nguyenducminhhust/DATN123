@@ -12,6 +12,7 @@ export default function Login() {
     const { name, value } = e.target;
     setUser({ ...user, [name]: value });
   };
+  // Đăng nhập
   const LoginSubmit = async (e) => {
     e.preventDefault();
     try {

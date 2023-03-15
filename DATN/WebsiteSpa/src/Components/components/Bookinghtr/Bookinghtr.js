@@ -5,7 +5,6 @@ import "./Bookinghtr.css"
 import axios from "axios";
 import { debounce } from "lodash";
 import { set } from "date-fns";
-
 export default function Bookinghtr() {
     const state = useContext(Service);
     const [isCheck, setIsCheck] = useState(false);
@@ -13,15 +12,28 @@ export default function Bookinghtr() {
     const [userbook, setUserBook] = state.userAPI.user;
     const [bookdatecheck, setBookDateCheck] = useState({bookdatecheck1: "",});
     const [databookcheck, setDataBookCheck] = useState([]);
+    const [callback, setCallBack] = useState(false);
     const [isAdmin]= state.userAPI.isAdmin;
     const [isStaff]= state.userAPI.isStaff;
     const [service, setService]= state.servicesAPI.services;
     const [staffschedule, setStaffSchedule]= state.staffscheduleAPI.staffschedule;
+    // Lấy dữ liệu lịch đặt
+    useEffect(() => {
+      const getBookings = async () => {
+        const res = await axios.get(
+          `/api/bookings`
+        );
+        console.log(res);
+        setBookingList(res.data);
+        
+      };
+      getBookings();
+    }, [callback]);
 
     const bookCheckInputs = () => {       
         setIsCheck(!isCheck);
     };
-    console.log(databookcheck, bookinglist, bookdatecheck);
+    // Lấy dữ liệu lịch đặt theo khách hàng hoặc spa
     useEffect(() => {
         
         if(isAdmin||isStaff) { const datauserbook1 = bookinglist.filter((booklist)=>
@@ -66,31 +78,39 @@ export default function Bookinghtr() {
     
       ];
       const [test, setTest]= useState(false);
+      // Lọc dịch vụ theo tên
       const checkTitleService = (title)=> service.filter((sv) => 
       sv.title === title );
-      const checkStaff = (namestaff)=> staffschedule.filter((sv) => 
-      sv.namestaff === namestaff );
+      // Lọc dịch vụ theo tên nhân viên, ngày đặt
+      const checkStaff = (namestaff, bookdate)=> staffschedule.filter((staffsche) => 
+      staffsche.namestaff === namestaff && staffsche.daywork===bookdate);
+
+      // Xóa lịch đặt, xử lý dữ liệu thời gian lại cho nhân viên
       const handleDeleteClick = async (bookcheck)=>{
         try {
           const param = bookcheck._id;
           const checktitleservice = checkTitleService(bookcheck.service);
-          const checkstaff = checkStaff(bookcheck.namestaff);
+          const checkstaff = checkStaff(bookcheck.namestaff, bookcheck.bookdate);
           let addnumberlost=checkstaff[0].arraytimework;
          for(let i=bookcheck.numbertime+1; i<bookcheck.numbertime+1+(checktitleservice[0].durationtime/30);i++){
             addnumberlost.push(i);
           }
           const newarraytimework = addnumberlost.sort((a, b) => a - b);
-          setTest(addnumberlost);
           const staffname =bookcheck.namestaff;
-          await axios.patch("/api/staffschedule",{namestaff:staffname, arraytimework: newarraytimework});
+          const bookdate = bookcheck.bookdate;
+          const filterstaffsche = staffschedule.filter((staffsche)=>
+          staffsche.namestaff===staffname&&staffsche.daywork===bookdate
+          );
+          const filterid = filterstaffsche[0]._id;
+          setTest(filterid);
+          await axios.patch("/api/staffschedule",{_id: filterid,arraytimework: newarraytimework});
           await axios.delete(`/api/bookings/${param}`, {_id: bookcheck._id}); 
-          alert("Successful Delete!");
-          window.location.reload();
+          setCallBack(!callback);
+          alert("Xóa thành công!");
         } catch (err) {
           alert(err.response.data.msg);
         }
     };
-      console.log(test, typeof test);
 return (
     <>
     <Header/>

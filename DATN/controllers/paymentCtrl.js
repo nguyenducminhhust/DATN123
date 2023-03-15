@@ -14,7 +14,7 @@ const PaymentCtrl = {
   createPayment: async (req, res) => {
     try {
       const user = await Users.findById(req.user.id).select("name email");
-      if (!user) return res.status(400).json({ msg: "User does not exist." });
+      if (!user) return res.status(400).json({ msg: "Người dùng đã tồn tại" });
 
       const { cart, paymentID, address, status } = req.body;
 
@@ -33,12 +33,8 @@ const PaymentCtrl = {
       cart.filter((item) => {
         return sold(item._id, item.quantity, item.sold);
       });
-      // cart.filter((item) => {
-      //   return stock(item._id, item.quantity, item.stock);
-      // });
-
       await newPayment.save();
-      res.json({ msg: "Payment Succes!" });
+      res.json({ msg: "Thanh toán thành công!" });
     } catch (err) {
       return res.status(500).json({ msg: err.message });
     }
@@ -51,7 +47,7 @@ const PaymentCtrl = {
                 status: req.body.status,
             }
         );
-        res.json({ msg: "Updated Status" });
+        res.json({ msg: "Cập nhật trạng thái thành công!" });
     } catch (err) {
         return res.status(500).json({ msg: err.message });
     }
@@ -66,8 +62,4 @@ const sold = async (id, quantity, oldSold) => {
     }
   );
 };
-
-
-
-
 module.exports = PaymentCtrl;

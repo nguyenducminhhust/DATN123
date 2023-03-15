@@ -1,5 +1,5 @@
 import React from "react";
-import BtnRender from "./BtnRender";
+import ButtonService from "./ButtonService";
 import "./serviceItem.css"
 export default function ServiceItem({
   service,
@@ -23,7 +23,7 @@ export default function ServiceItem({
         <p className="linebreackp1">{service.description}</p>
       </div>
 
-      <BtnRender  service={service} deleteService={deleteService} />
+      <ButtonService  service={service} deleteService={deleteService} />
     </div>
   );
 }

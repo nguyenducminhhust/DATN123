@@ -4,6 +4,7 @@ import axios from "axios";
 export default function PaymentAPI() {
   const [payment, setPayment] = useState([]);
   const [callback, setCallback] = useState(false);
+  // Lấy dữ liệu thanh toán
   useEffect(() => {
     const getPayment = async () => {
       const res = await axios.get("/api/payment");

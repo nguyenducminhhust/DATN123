@@ -11,21 +11,24 @@ export default function Contact() {
     phonenumber: 0,
     title:"",
     content:"",
+    contactid:"",
  }]);
   const handleInputContact = (e, index, ) => {
     const { name, value } = e.target;
     setContact({...contact, [name] :value});
   };
+  // tạo liên hệ
   const contactSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("/api/contacts", {...contact});
+      const contactID= `contact${new Date().getTime()}`; 
+      await axios.post("/api/contacts", {...contact, contactid:contactID});
       setContact({email: "", 
       name: "",
       phonenumber: 0,
       title:"",
       content:""})
-    alert("Create Sucessed");
+    alert("Gửi thành công");
     } catch (err) {
       alert(err.response.data.msg);
     }

@@ -4,9 +4,9 @@ import axios from "axios";
 export default function StaffScheduleAPI() {
   const [staffschedules, setStaffSchedule] = useState([]);
   const [callback, setCallback] = useState(false);
-
+  // Lấy dữ liệu lịch nhân viên
   useEffect(() => {
-    const getBookings = async () => {
+    const getStaffSchedules = async () => {
       const res = await axios.get(
         `/api/staffschedule`
       );
@@ -14,7 +14,7 @@ export default function StaffScheduleAPI() {
     setStaffSchedule(res.data);
       
     };
-    getBookings();
+    getStaffSchedules();
   }, [callback]); 
  console.log(staffschedules);
   return {

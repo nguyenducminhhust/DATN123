@@ -34,16 +34,11 @@ const bookingSystemSchema = new mongoose.Schema(
     booktime: {
       type: String,
       trim: true,
-      //required,
     },
-    // booklist: {
-    //   type: Array,
-    //   default: [],
-    // },
+   
     booknote: {
       type: String,
       trim: true,
-     // required: true,
     },
     numbertime:{
       type:Number,

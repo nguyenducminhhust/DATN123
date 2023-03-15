@@ -18,21 +18,16 @@ const userCtrl = {
 
       const user = await Users.findOne({ email });
       if (user) {
-        return res.status(400).json({ msg: "The email already exists." });
+        return res.status(400).json({ msg: "Địa chỉ Email đã tồn tại." });
       }
       if (password.length < 6) {
         return res
           .status(400)
-          .json({ msg: "Password is at least 6 characters long." });
+          .json({ msg: "Độ dài mật khẩu tối thiểu 6 kí tự." });
       }
       // Password Encryption
       const passwordHash = await bcrypt.hash(password, 10);
-//       const bcrypt = require('bcrypt');
-
-        // async function decodePasswordHash(passwordHash) {
-        //   const password = await bcrypt.compare(passwordHash, 10);
-        //   return password;
-      const newUser = new Users({
+        const newUser = new Users({
         name,
         email,
         password: passwordHash,
@@ -44,13 +39,8 @@ const userCtrl = {
       });
       // Save mongodb
       await newUser.save();
-      //   res.json({ msg: "Successful" });
-
-      // Then create jsonwebtoken to authentication
       const accesstoken = createAccessToken({ id: newUser._id });
-
       const refreshtoken = createRefreshToken({ id: newUser._id });
-
       res.cookie("refreshtoken", refreshtoken, {
         httpOnly: true,
         path: "/user/refresh_token",
@@ -74,26 +64,21 @@ const userCtrl = {
         kindofstaff,
         phonenumber,
         salary,
-        balance,
+        note,
         debt,
       } = req.body;
 
       const user = await Users.findOne({ email });
       if (user) {
-        return res.status(400).json({ msg: "The email already exists." });
+        return res.status(400).json({ msg: "Địa chỉ Email đã tồn tại." });
       }
       if (password.length < 6) {
         return res
           .status(400)
-          .json({ msg: "Password is at least 6 characters long." });
+          .json({ msg: "Độ dài mật khẩu tối thiểu 6 kí tự." });
       }
       // Password Encryption
       const passwordHash = await bcrypt.hash(password, 10);
-//       const bcrypt = require('bcrypt');
-
-        // async function decodePasswordHash(passwordHash) {
-        //   const password = await bcrypt.compare(passwordHash, 10);
-        //   return password;
       const newUser = new Users({
         name,
         email,
@@ -103,24 +88,11 @@ const userCtrl = {
         kindofstaff,
         phonenumber,
         salary,
-        balance,
+        note,
         debt,
       });
       // Save mongodb
       await newUser.save();
-     
-
-      // Then create jsonwebtoken to authentication
-      // const accesstoken = createAccessToken({ id: newUser._id });
-
-      // const refreshtoken = createRefreshToken({ id: newUser._id });
-
-      // res.cookie("refreshtoken", refreshtoken, {
-      //   httpOnly: true,
-      //   path: "/user/refresh_token",
-      //   maxAge: 7 * 24 * 60 * 60 * 1000, // 7d
-      // });
-
       res.json({ newUser });
     } catch (err) {
       return res.status(500).json({ msg: err.message });
@@ -132,13 +104,12 @@ const userCtrl = {
       const { email, password } = req.body;
 
       const user = await Users.findOne({ email });
-      if (!user) return res.status(400).json({ msg: "User does not exist." });
+      if (!user) return res.status(400).json({ msg: "Người dùng không tồn tại." });
 
       const isMatch = await bcrypt.compare(password, user.password);
-      if (!isMatch) return res.status(400).json({ msg: "Incorrect password." });
+      if (!isMatch) return res.status(400).json({ msg: "Sai mật khẩu." });
 
-      // If login success , create access token and refresh token
-      //res.json({ msg: "Login success" });
+      // Nếu đăng nhập thành công , tạo access token và refresh token
       const accesstoken = createAccessToken({ id: user._id });
       const refreshtoken = createRefreshToken({ id: user._id });
 
@@ -156,7 +127,7 @@ const userCtrl = {
   logout: async (req, res) => {
     try {
       res.clearCookie("refreshtoken", { path: "/user/refresh_token" });
-      return res.json({ msg: "Logged out" });
+      return res.json({ msg: "Đã đăng xuất" });
     } catch (err) {
       return res.status(500).json({ msg: err.message });
     }
@@ -165,11 +136,11 @@ const userCtrl = {
     try {
       const rf_token = req.cookies.refreshtoken;
       if (!rf_token)
-        return res.status(400).json({ msg: "Please Login or Register" });
+        return res.status(400).json({ msg: "Vui lòng đăng nhập hoặc đăng ký" });
 
       jwt.verify(rf_token, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
         if (err)
-          return res.status(400).json({ msg: "Please Login or Register" });
+          return res.status(400).json({ msg: "Vui lòng đăng nhập hoặc đăng ký" });
 
         const accesstoken = createAccessToken({ id: user.id });
 
@@ -182,19 +153,12 @@ const userCtrl = {
   getUser: async (req, res) => {
     try {
       const user = await Users.findById(req.user.id).select("-password");
-      if (!user) return res.status(400).json({ msg: "User does not exist." });
-
+      if (!user) return res.status(400).json({ msg: "Người dùng không tồn tại." });
       res.json(user);
-      //res.json(req.user);
     } catch (err) {
       return res.status(500).json({ msg: err.message });
     }
-  //   try {
-  //     const user = await Users.find();
-  //     res.json(user);
-  // } catch (err) {
-  //     return res.status(500).json({ msg: err.message });
-  // }
+ 
   },
   getAllUser: async(req, res) => {
     try {
@@ -207,7 +171,7 @@ const userCtrl = {
   addCart: async (req, res) => {
     try {
       const user = await Users.findById(req.user.id);
-      if (!user) return res.status(400).json({ msg: "User does not exist." });
+      if (!user) return res.status(400).json({ msg: "Người dùng không tồn tại." });
 
       await Users.findOneAndUpdate(
         { _id: req.user.id },
@@ -216,7 +180,7 @@ const userCtrl = {
         }
       );
 
-      return res.json({ msg: "Added to cart" });
+      return res.json({ msg: "Đã thêm vào giỏ hàng" });
     } catch (err) {
       return res.status(500).json({ msg: err.message });
     }
@@ -224,7 +188,7 @@ const userCtrl = {
   updateDebt: async (req, res) => {
     try {
       const user = await Users.findById(req.user.id);
-      if (!user) return res.status(400).json({ msg: "User does not exist." });
+      if (!user) return res.status(400).json({ msg: "Người dùng không tồn tại." });
 
       await Users.findOneAndUpdate(
         { _id: req.user.id },
@@ -233,24 +197,22 @@ const userCtrl = {
         }
       );
 
-      return res.json({ msg: "Update Debt Success" });
+      return res.json({ msg: "Đã cập nhật tiền chưa thanh toán" });
     } catch (err) {
       return res.status(500).json({ msg: err.message });
     }
   },
   modifyDebt: async (req, res) => {
     try {
-    //  const {userid} = req.body;
-      // if (!user) return res.status(400).json({ msg: "User does not exist." });
-
       await Users.findOneAndUpdate(
         { _id: req.body._id },
         {
           debt: req.body.handledebt,
+          note: req.body.handlenote,
         }
       );
 
-      return res.json({ msg: "Update Debt Success" });
+      return res.json({ msg: "Đã cập nhật tiền chưa thanh toán thành công" });
     } catch (err) {
       return res.status(500).json({ msg: err.message });
     }
@@ -258,7 +220,7 @@ const userCtrl = {
   addServiceBought: async (req, res) => {
     try {
       const user = await Users.findById(req.user.id);
-      if (!user) return res.status(400).json({ msg: "User does not exist." });
+      if (!user) return res.status(400).json({ msg: "Người dùng không tồn tại." });
       const cartlength = req.body.cartupdate.length;
       for(let i=0; i<cartlength; i++){
       await Users.findOneAndUpdate(
@@ -271,7 +233,7 @@ const userCtrl = {
         }
       );
       }
-      return res.json({ msg: "Added to servicebought" });
+      return res.json({ msg: "Đã thêm vào sản phẩm đã mua" });
     } catch (err) {
       return res.status(500).json({ msg: err.message });
     }
@@ -294,7 +256,6 @@ const userCtrl = {
         kindofstaff,
         phonenumber,
         salary, } = req.body;
-      // if (!images) return res.status(400).json({ msg: "No image upload" });
       await Users.findOneAndUpdate(
         { email: req.body.email },
         {
@@ -308,16 +269,14 @@ const userCtrl = {
         }
       );
       console.log(req.params);
-      res.json({ msg: "Updated infor Staff" });
+      res.json({ msg: "Đã cập nhật thông tin nhân viên" });
     } catch (err) {
       return res.status(500).json({ msg: err.message });
     }
   },
   deleteUser: async (req, res) => {
     try {
-      // const { _id } = req.body;
-      await Users.findByIdAndDelete(req.params.id);
-      res.json({ msg: "Deleted a User" });
+      res.json({ msg: "Đã xóa người dùng" });
     } catch (err) {
       return res.status(500).json({ msg: err.message });
     }

@@ -10,8 +10,9 @@ import ReactPaginate from "react-paginate";
 export default function ContainerService() {
   const state = useContext(Service);
   const [token] = state.token;
-  const [containerservices, setContainerServices] = state.containerserviceAPI.containerservice;
-  const [userdataprocess, setUserDataProcess] = state.userAPI.userdataprocess;// mảngtimebought
+  const [userdataprocess, setUserDataProcess] = state.userAPI.userdataprocess;
+  const [callback, setCallBack]= state.userAPI.callback;
+  // phân trang
   const itemsPerPage = 4;
   const [itemOffset, setItemOffset] = useState(0);
   const endOffset = itemOffset + itemsPerPage;
@@ -21,6 +22,7 @@ export default function ContainerService() {
     const newOffset = (event.selected * itemsPerPage) % userdataprocess.length;
     setItemOffset(newOffset);
   };
+  // lây dữ liệu người dùng
   useEffect(() => {
     if (token) {
       const getContainerService = async () => {
@@ -30,7 +32,6 @@ export default function ContainerService() {
         });
         setUserDataProcess(res.data.servicebought);
         }
-
         getContainerService();
     }
   }, [ token,setUserDataProcess]); 
@@ -52,17 +53,14 @@ export default function ContainerService() {
                 <DetailsCS 
                 key={index}
                 userdata={userdata}
-                containerservices= {containerservices}
-                userdataprocess={userdataprocess}
-
                 />
           )
           })}                                                
               </div> 
               <div className="paginatecontainer">
               <ReactPaginate
-          previousLabel="Previous"
-          nextLabel="Next"
+          previousLabel="Trước"
+          nextLabel="Sau"
           pageClassName="page-item"
           pageLinkClassName="page-link"
           previousClassName="page-item"

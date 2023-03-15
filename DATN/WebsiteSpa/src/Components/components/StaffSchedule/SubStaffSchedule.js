@@ -1,7 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Service } from "../../GlobalState";
 export default function SubStaffSchedule({index, scheduleaftercheck, handleDeleteClick}) {
- console.log(scheduleaftercheck);
     return(
     <tr>
     <td>{index+1}</td>

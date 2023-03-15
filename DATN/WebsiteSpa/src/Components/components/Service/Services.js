@@ -9,7 +9,6 @@ import Filter from "./Filters";
 import LoadMore from "./LoadMore";
 import Footer from "../Footer/Footer";
 import img from "./../../../assets/images/spa3.jpg";
-import HeaderNode from "../HeaderNode/HeaderNode";
 import Slider from "./Slider/Slider";
 import ReactPaginate from "react-paginate";
 import Servicesub from "./Servicesub";
@@ -23,14 +22,14 @@ export default function Services() {
   const [loading, setLoading] = useState(false);
   const [isCheck, setIsCheck] = useState(false);
   const [category, setCategory] = state.categoriesAPI.categories;       
+  // chọn dịch vụ để thao tác
   const handleCheck = (id) => {
     services.forEach((service) => {
       if (service._id === id) service.checked = !service.checked;
     });
     setServices([...services]);
   };
-  console.log(services);
-
+  // xóa dịch vụ
   const deleteService = async (id, public_id) => {
     try {
       setLoading(true);
@@ -53,7 +52,7 @@ export default function Services() {
       alert(err.response.data.msg);
     }
   };
-
+  // chọn tất cả dịch vụ
   const checkAll = () => {
     services.forEach((service) => {
       service.checked = !isCheck;
@@ -61,7 +60,7 @@ export default function Services() {
     setServices([...services]);
     setIsCheck(!isCheck);
   };
-
+  // xóa tất cả dịch vụ
   const deleteAll = () => {
     services.forEach((service) => {
       if (service.checked) deleteService(service._id, service.images.public_id);
@@ -76,11 +75,7 @@ export default function Services() {
     );
   return (
     <>
-      {/* {!isAdmin && (
-        <>
-          <HeaderNode />
-        </>
-      )} */}
+      
       <Header />
      <div className="mainservice">
       <div>
@@ -92,21 +87,11 @@ export default function Services() {
      
       {!isAdmin && (
         <>
-          {/* <div className="featureservice">
-            <h1 className="featureservicefont">
-              FEATURED SERVICE
-            </h1>
-            <hr />
-          </div> */}
+          
         <div className="sildersetsize">  <Slider /></div>
         </>
       )}
       </div>
-    
-      {/* <div className="service">
-        <h1 className="service font"> Service </h1>
-     
-      </div> */}
       <Filter />
       {isAdmin && (
         <div className="delete-all">

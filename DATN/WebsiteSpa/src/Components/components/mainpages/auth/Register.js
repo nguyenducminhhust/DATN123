@@ -15,7 +15,7 @@ export default function Register() {
     const { name, value } = e.target;
     setUser({ ...user, [name]: value });
   };
-
+  // Đăng ký
   const registerSubmit = async (e) => {
     e.preventDefault();
     try {

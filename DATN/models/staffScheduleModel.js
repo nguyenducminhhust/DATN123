@@ -13,13 +13,10 @@ const staffScheduleSchema = new mongoose.Schema(
     arraytimework: {
       type: Array,
       default: [],
-      //required: true,
-      // default: "",
     },
     namestaff: {
       type: String,
       trim: true,
-      //required: true,
     },
    
     

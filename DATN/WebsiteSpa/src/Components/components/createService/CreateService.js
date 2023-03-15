@@ -22,18 +22,15 @@ export default function CreateService() {
   const [categories] = state.categoriesAPI.categories;
   const [images, setImages] = useState(false);
   const [loading, setLoading] = useState(false);
-
   const [isAdmin] = state.userAPI.isAdmin;
   const [token] = state.token;
-
   const history = useNavigate();
   const param = useParams();
-
   const [services] = state.servicesAPI.services;
   const [onEdit, setOnEdit] = useState(false);
   const [callback, setCallback] = state.servicesAPI.callback;
   const [inputprice, setInputprice] = useState([{ session: "", price: "" }]);
-
+  // Lấy dữ liệu dịch vụ, trả về trạng thái tạo hay sửa
   useEffect(() => {
     if (param.id) {
       setOnEdit(true);
@@ -58,24 +55,24 @@ export default function CreateService() {
     service.price = inputprice;
   };
   console.log(service);
-  // handle click event of the Remove button
+  // xử lý sự kiện nhấp chuột của nút Xóa
   const handlePriceRemoveClick = index => {
     const list = [...inputprice];
     list.splice(index, 1);
     setInputprice(list);
   };
 
-  // handle click event of the Add button
+  // xử lý sự kiện nhấp chuột của nút Thêm
   const handlePriceAddClick = () => {
     setInputprice([...inputprice, { session: 0, price: 0 }]);
   };
   const handleUpload = async (e) => {
     e.preventDefault();
     try {
-      if (!isAdmin) return alert("You're not an admin");
+      if (!isAdmin) return alert("Bạn không phải là quản trị viên");
       const file = e.target.files[0];
 
-      if (!file) return alert("File not exist.");
+      if (!file) return alert("Tệp không tồn tại.");
 
       if (file.size > 1024 * 1024)
         // 1mb
@@ -88,7 +85,7 @@ export default function CreateService() {
         file.type !== "image/jpg"
       )
         // 1mb
-        return alert("File format is incorrect.");
+        return alert("Định dạng tệp không chính xác.");
 
       let formData = new FormData();
       formData.append("file", file);
@@ -107,10 +104,9 @@ export default function CreateService() {
       console.log(err);
     }
   };
-  // console.log(images)
   const handleDestroy = async () => {
     try {
-      if (!isAdmin) return alert("You're not an admin");
+      if (!isAdmin) return alert("Bạn không phải là quản trị viên");
       setLoading(true);
       await axios.post(
         "/api/destroy",
@@ -135,8 +131,8 @@ export default function CreateService() {
     e.preventDefault();
     try {
       service.price = inputprice;
-      if (!isAdmin) return alert("You're not an admin");
-      if (!images) return alert("No Image Upload");
+      if (!isAdmin) return alert("Bạn không phải là quản trị viên");
+      if (!images) return alert("Không tải lên hình ảnh");
       if (onEdit) {
         await axios.put(
           `/api/services/${service._id}`,
@@ -208,7 +204,7 @@ export default function CreateService() {
             />
           </div>
 
-          <div className="App">
+          <div className="row">
 
             {inputprice.map((x, i) => {
               return (
@@ -241,7 +237,7 @@ export default function CreateService() {
 
           </div>
           <div className="row">
-            <label htmlFor="durationtime">Thời gian dự kiến</label>
+            <label htmlFor="durationtime">Thời gian dự kiến - phút (chia hết cho 30)</label>
             <input
               type="number"
               name="durationtime"
@@ -251,7 +247,6 @@ export default function CreateService() {
               onChange={handleChangeInput}
             />
           </div>
-
           <div className="row">
             <label htmlFor="description">Mô Tả</label>
             <textarea

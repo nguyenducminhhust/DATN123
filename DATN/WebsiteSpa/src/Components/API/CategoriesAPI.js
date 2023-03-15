@@ -4,6 +4,7 @@ import axios from "axios";
 export default function CategoriesAPI() {
   const [categories, setCategories] = useState([]);
   const [callback, setCallback] = useState(false);
+  // Lấy dữ liệu danh mục
   useEffect(() => {
     const getCategories = async () => {
       const res = await axios.get("/api/category");

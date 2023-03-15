@@ -11,6 +11,7 @@ const contactCtrl = {
   createContact: async (req, res) => {
     try {
       const {
+        contactid,
         email, 
         name,
         phonenumber,
@@ -18,6 +19,7 @@ const contactCtrl = {
         content
       } = req.body;
       const newContact = new Contact({
+        contactid,
         email, 
         name,
         phonenumber,
@@ -26,7 +28,7 @@ const contactCtrl = {
       });
 
       await newContact.save(); 
-      res.json({ msg: "Created a contact" });
+      res.json({ msg: "Gửi liên hệ thành công" });
     } catch (err) {
       return res.status(500).json({ msg: err.message });
     }
@@ -34,14 +36,16 @@ const contactCtrl = {
   deleteContact: async (req, res) => {
     try {
       await Contact.findByIdAndDelete(req.params.id);
-      res.json({ msg: "Deleted a contact" });
+      res.json({ msg: "Đã xóa liên hệ" });
     } catch (err) {
       return res.status(500).json({ msg: err.message });
     }
   },
   updateContact: async (req, res) => {
     try {
-      const { email, 
+      const { 
+        contactid,
+        email, 
         name,
         phonenumber,
         title,
@@ -49,6 +53,7 @@ const contactCtrl = {
       await Contact.findOneAndUpdate(
         { _id: req.params.id },
         {
+        contactid,
         email, 
         name,
         phonenumber,
@@ -57,7 +62,7 @@ const contactCtrl = {
         }
       );
       console.log(req.params);
-      res.json({ msg: "Updated a contact" });
+      res.json({ msg: "Đã cập nhật liên hệ" });
     } catch (err) {
       return res.status(500).json({ msg: err.message });
     }

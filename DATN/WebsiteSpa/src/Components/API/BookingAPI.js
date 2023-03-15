@@ -4,7 +4,7 @@ import axios from "axios";
 export default function BookingAPI() {
   const [bookings, setBookings] = useState([]);
   const [callback, setCallback] = useState(false);
-
+  // Lấy dữ liệu lịch đặt
   useEffect(() => {
     const getBookings = async () => {
       const res = await axios.get(
@@ -16,7 +16,6 @@ export default function BookingAPI() {
     };
     getBookings();
   }, [callback]); 
-  //console.log(bookings);
   return {
     bookings: [bookings, setBookings],
     callback: [callback, setCallback],

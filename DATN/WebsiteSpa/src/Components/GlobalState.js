@@ -5,18 +5,16 @@ import axios from "axios";
 import CategoriesAPI from "./API/CategoriesAPI";
 import ContainerServiceAPI from "./API/ContainerServiceAPI";
 import BookingAPI from "./API/BookingAPI";
-import BooklistAPI from "./API/BooklistAPI";
 import AllUserAPI from "./API/AllUserAPi";
 import DataProcessCustomerAPI from "./API/DataDrocessCustomerAPI";
 import StaffScheduleAPI from "./API/StaffScheduleAPI";
 import PaymentAPI from "./API/PaymentAPI";
 import CostAPI from "./API/CostAPI";
 import ContactAPI from "./API/ContactAPI";
+import ExportAPI from "./API/ExportAPI";
 export const Service = createContext();
 export const DataProvider = ({ children }) => {
   const [token, setToken] = useState(false);
- 
-
   useEffect(() => {
     const firstLogin = localStorage.getItem("firstLogin");
     if (firstLogin === "true") {
@@ -38,7 +36,6 @@ export const DataProvider = ({ children }) => {
     userAPI: UserAPI(token),
     categoriesAPI: CategoriesAPI(),
     containerserviceAPI: ContainerServiceAPI(),
-    booklistAPI: BooklistAPI(),
     bookingAPI: BookingAPI(),
     alluserAPI: AllUserAPI(),
     dataprocesscustomerAPI: DataProcessCustomerAPI(),
@@ -46,6 +43,7 @@ export const DataProvider = ({ children }) => {
     paymentAPI: PaymentAPI(),
     costAPI: CostAPI(),
     contactAPI: ContactAPI(),
+    exportAPI : ExportAPI(),
   };
 
   ServicesAPI();

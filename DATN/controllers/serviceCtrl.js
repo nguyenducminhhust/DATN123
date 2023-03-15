@@ -1,35 +1,22 @@
 const Services = require("../models/serviceModel");
 
-// Filter, sorting and paginating
+// Filter, sorting
 class APIfeatures {
   constructor(query, queryString) {
     this.query = query;
     this.queryString = queryString;
   }
   filtering() {
-
-    const queryObj = { ...this.queryString }; //queryString = req.query
-
+    //queryString = req.query
+    const queryObj = { ...this.queryString }; 
     const excludedFields = ["page", "sort", "limit"];
     excludedFields.forEach((el) => delete queryObj[el]);
-    
     let queryStr = JSON.stringify(queryObj);
-    
     queryStr = queryStr.replace(
       /\b(gte|gt|lt|lte|regex)\b/g,
       (match) => "$" + match
     );
-    // console.log(queryStr);
-    //    gte = greater than or equal
-    //    lte = lesser than or equal
-    //    lt = lesser than
-    //    gt = greater than
-   
-    // console.log(test.title, typeof test.title);
-    this.query.find(JSON.parse(queryStr));
-    
-      // console.log(JSON.parse(queryStr));
-     
+    this.query.find(JSON.parse(queryStr));     
     return this;
   }
 
@@ -43,15 +30,6 @@ class APIfeatures {
 
     return this;
   }
-
-  paginating() {
-    const page = this.queryString.page * 1 || 1;
-    const limit = this.queryString.limit * 1 || 8;
-    const skip = (page - 1) * limit;
-    this.query = this.query.skip(skip).limit(limit);
-    // console.log(this.query)
-    return this;
-  }
 }
 
 const serviceCtrl = {
@@ -60,14 +38,9 @@ const serviceCtrl = {
       const features = new APIfeatures(Services.find(), req.query)
         .filtering()
         .sorting()
-        // .paginating();
-        
-        // res.json({
-        //   features: features.query,
-        // });
       const services = await features.query;
       res.json({
-        status: "success",
+        status: "Thành công",
         result: services.length,
         services: services,
       });
@@ -88,10 +61,10 @@ const serviceCtrl = {
         images,
         category,
       } = req.body;
-      if (!images) return res.status(400).json({ msg: "No image upload" });
+      if (!images) return res.status(400).json({ msg: "Ảnh chưa tải lên" });
       const service = await Services.findOne({ service_id });
       if (service)
-        return res.status(400).json({ msg: "This service already exists." });
+        return res.status(400).json({ msg: "Dịch vụ này đã tồn tại." });
       const newService = new Services({
         service_id,
         title: title.toLowerCase(),
@@ -104,7 +77,7 @@ const serviceCtrl = {
       });
 
       await newService.save(); 
-      res.json({ msg: "Created a service" });
+      res.json({ msg: "Đã tạo dịch vụ" });
     } catch (err) {
       return res.status(500).json({ msg: err.message });
     }
@@ -112,7 +85,7 @@ const serviceCtrl = {
   deleteService: async (req, res) => {
     try {
       await Services.findByIdAndDelete(req.params.id);
-      res.json({ msg: "Deleted a Service" });
+      res.json({ msg: "Đã xóa dịch vụ" });
     } catch (err) {
       return res.status(500).json({ msg: err.message });
     }
@@ -126,7 +99,7 @@ const serviceCtrl = {
         content,
         images,
         category, } = req.body;
-      if (!images) return res.status(400).json({ msg: "No image upload" });
+      if (!images) return res.status(400).json({ msg: "Ảnh chưa tải lên" });
       await Services.findOneAndUpdate(
         { _id: req.params.id },
         {
@@ -140,7 +113,7 @@ const serviceCtrl = {
         }
       );
       console.log(req.params);
-      res.json({ msg: "Updated a Service" });
+      res.json({ msg: "Đã cập nhật dịch vụ" });
     } catch (err) {
       return res.status(500).json({ msg: err.message });
     }

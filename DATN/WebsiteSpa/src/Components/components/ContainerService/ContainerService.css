@@ -8,7 +8,6 @@ height: 300px;
 .pagination{
 
   align-items: center;
-  /* background-color: #0fbcf9; */
   display: flex;
   flex-direction: row;
   height: 60px;
@@ -17,29 +16,6 @@ height: 300px;
   position: relative;
   width: fit-content;
 }
-/* .item{
-    align-items: center;
-    color: #FFF;
-    cursor: pointer;
-    display: flex;
-    font-size: 14px;
-    height: 40px;
-    justify-content: center;
-    width: 40px;
-} */
-/* .next{
-    border-left: solid 1px #808e9b;
-    font-size: 4px;
-    height: 60px;
-    position: absolute;
-    right: 0;
-    width: 150px;
+.servicenamecontainer1{
+  text-align: center;
 }
-.previous{
-    border-right: solid 1px #808e9b;
-  font-size: 4px;
-  height: 60px;
-  left: 0;
-  position: absolute;
-  width: 150px;
-} */

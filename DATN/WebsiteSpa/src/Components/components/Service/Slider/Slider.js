@@ -7,13 +7,10 @@ import img4 from "./chamsocda1.PNG";
 import img5 from "./trietlong2.PNG";
 import img6 from "./munmu.jpg";
 import img7 from "./trimun.jpg";
-// Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
 import "./Slider.css";
-// import required modules
 import { Pagination, Autoplay } from "swiper";
-
 export default function Slider() {
   return (
     <>
@@ -42,23 +39,14 @@ export default function Slider() {
         <SwiperSlide>
           <img src={img3} />
         </SwiperSlide>
-        {/* <SwiperSlide>
-          {" "}
-          <img src={img4} />
-        </SwiperSlide> */}
+        
         <SwiperSlide>
-          {" "}
           <img src={img5} />
         </SwiperSlide>
         <SwiperSlide>
-          {" "}
           <img src={img6} />
         </SwiperSlide>
-        {/* <SwiperSlide>
-          {" "}
-          <img src={img7} />
-        </SwiperSlide> */}
-        
+       
       </Swiper>
     </>
   );

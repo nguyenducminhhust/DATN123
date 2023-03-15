@@ -1,0 +1,66 @@
+.tableimport{
+    margin-top: 50px;
+    width: 1280px;
+    text-align: center;
+    margin-left: 50px;
+}
+.tableexport{
+    width: 1280px;
+    margin-top: 50px;
+    margin-left: 50px;
+}
+.tablecostmain{
+    width: 1280px;
+    
+    margin: auto;
+    text-align: center;
+    border-left: 1px solid gray;
+    border-right: 1px solid gray;
+}
+.divtablemain table, .divtablemain th, .divtablemain td{
+    border: 1px solid black;
+}
+.divtablemain{
+    margin-top: 10px;
+    width: 800px;
+    margin: auto;
+}
+.managecosttable input{
+    width: 150px;
+}
+.managecosttable{
+    margin-top: 20px;
+    width: 1280px;
+    margin-left: 15px;
+   
+}
+.managecosttable input,
+.tableimport input,
+.tableexport input{
+    width: 137px;
+    margin-left: 15px;
+}
+.tableimport button,
+.tableexport button,
+.tablecostmain button{
+    border: 1px solid black;
+    border-radius: 8px;
+    padding: 5px 8px;
+    margin-top: 20px ;
+    margin-left: 10px;
+}
+.titletablecost{
+    font-size: 40px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+.managecosttable table, .managecosttable th, .managecosttable td{
+    border: 1px solid black;
+}
+.tableimport table, .tableimport th, .tableimport td{
+    border: 1px solid black;
+}
+.tableexport table, .tableexport th, .tableexport td{
+    border: 1px solid black;
+
+}

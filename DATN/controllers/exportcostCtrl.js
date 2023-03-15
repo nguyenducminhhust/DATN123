@@ -31,7 +31,7 @@ const exportexportcostCtrl = {
       });
 
       await newExportcost.save(); 
-      res.json({ msg: "Created a Exportcost" });
+      res.json({ msg: "Đã tạo phiếu xuất" });
     } catch (err) {
       return res.status(500).json({ msg: err.message });
     }
@@ -39,7 +39,7 @@ const exportexportcostCtrl = {
   deleteExportcost: async (req, res) => {
     try {
       await Exportcosts.findByIdAndDelete(req.params.id);
-      res.json({ msg: "Deleted a Exportcost" });
+      res.json({ msg: "Đã xóa phiếu xuất" });
     } catch (err) {
       return res.status(500).json({ msg: err.message });
     }
@@ -64,7 +64,7 @@ const exportexportcostCtrl = {
         }
       );
       console.log(req.params);
-      res.json({ msg: "Updated a Exportcost" });
+      res.json({ msg: "Đã cập nhật phiếu xuất" });
     } catch (err) {
       return res.status(500).json({ msg: err.message });
     }

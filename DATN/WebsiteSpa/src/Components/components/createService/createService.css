@@ -1,9 +1,11 @@
 .create_service {
-    width: 100%;
+    width: 1280px;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-around;
+    background-color: #c8d7ee;
+    margin: auto;
 }
 
 .upload {
@@ -79,6 +81,8 @@
 .create_service form .row {
     width: 100%;
     margin: 15px 0;
+    font-size: 17px;
+    font-weight: bold;
 }
 
 .create_service form input,
@@ -92,7 +96,7 @@ textarea {
 .create_service form button {
     width: 200px;
     height: 40px;
-    background: #555;
+    background: #185fe4;
     color: white;
     text-transform: uppercase;
     letter-spacing: 2px;
