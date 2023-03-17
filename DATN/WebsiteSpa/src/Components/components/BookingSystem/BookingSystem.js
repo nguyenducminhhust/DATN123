@@ -15,7 +15,7 @@ const initialState = {
   phonenumber: 0,
   namestaff: "",
   numbertime:0,
-
+  hidestaffname:"",
 };
 
 export default function BookingSystem() {
@@ -39,6 +39,7 @@ export default function BookingSystem() {
   const [staffchangearray, setStaffChangeArray]= useState();
   const [arraytimeworkupdate, setArrayTimeWorkUpdate]= useState();
   const [listservice, setListService] = useState([]);
+  const [hidestaffname, setHideStaffName] = useState("");
   const [category, setCategory]=state.categoriesAPI.categories;
   const [service, setService]= state.servicesAPI.services;
   const [durationTime, setDurationTime]= useState(); // Thời gian làm dự kiến
@@ -90,7 +91,7 @@ export default function BookingSystem() {
       const res = await axios.get(
         `/api/staffschedule`
       );
-      console.log(res);
+      // console.log(res);
       setStaffSch(res.data);
     };
     getStaffSchedules();
@@ -139,31 +140,36 @@ export default function BookingSystem() {
   }
   // Xử lý thời gian trống, trả về mảng thời gian
   const lengthtime =(arraytime,length2, value)=>{
-    if(isSelected){
+    // if(isSelected){
       let checkresult= false;
       for(let j=value; j<value + length2-1; j++){
+        if(arraytime[j]==null||arraytime[j+1]==null){
+          checkresult = false;
+          break;
+        } else {
         if((arraytime[j+1]-arraytime[j])==1){ // kiểm tra có khoảng thời gian được chọn không
           checkresult= true;
         }else{ checkresult = false;
-        break;  }
+        break;  }}
       };
         if(checkresult){
           arraycheck.push(arraytime[value]);
+         setArrayCheck( Array.from(new Set(arraycheck)).sort((a, b) => a - b));
         };
 
-    } else {
-      let checkresult= false;
-      for(let j=value; j<value + length2-1; j++){
-        if((arraytime[j+1]-arraytime[j])==1){
-          checkresult= true;
-        }else{ checkresult = false;
-        break;  }
-      };
-        if(checkresult){
-          arraycheck.push(arraytime[value]); // mảng thời gian hiển thị
-        };
-      }
-    
+    // } else {
+    //   let checkresult= false;
+    //   for(let j=value; j<value + length2-1; j++){
+    //     if((arraytime[j+1]-arraytime[j])==1){
+    //       checkresult= true;
+    //     }else{ checkresult = false;
+    //     break;  }
+    //   };
+    //     if(checkresult){
+    //       arraycheck.push(arraytime[value]); // mảng thời gian hiển thị
+    //       setArrayCheck( Array.from(new Set(arraycheck)).sort((a, b) => a - b));
+    //     };
+    //   }
   }
   
  // Xử lý thời gian sau khi chọn
@@ -210,6 +216,8 @@ export default function BookingSystem() {
       );
       setBooking({...booking, numbertime: index});
       setArrayTimeWorkUpdate(newArray);
+      if(!isSelected){
+      setHideStaffName(filterstaff.namestaff);}
     };
     setCheckIndex(checkresult);
 }
@@ -220,6 +228,7 @@ export default function BookingSystem() {
       if(arraycheck.includes(index)){return true}
        else{ return false};
     }
+    console.log(booking);
   const CheckServiceStaff = (service)=> userlistcheck.filter((userlist) => 
   userlist.service === service );
 
@@ -231,6 +240,7 @@ export default function BookingSystem() {
   // Xử lý loại dịch vụ
   const handleCategory = (e) => {
     const {name,value}= e.target;
+    setBooking({ ...booking, bookdate: "", service: "", namestaff: "", hidestaffname:""});
     setListService(listService(value));
     setStaffCheck( CheckServiceStaff(value));
     setCallback(!callback);
@@ -255,15 +265,15 @@ export default function BookingSystem() {
 
   const handleChangeInput2 = (e) => {
     const { name, value } = e.target;
-    setBooking({ ...booking, [name]: value });
+    setBooking({ ...booking, [name]: value, bookdate: "", hidestaffname:"" });
     filterstaffschedule(value);
-    if(value=="default"){
+    if(value==""){
       setIsSelected(false);
     }else{
       setIsSelected(true);
     }
     setArrayCheck([]);
-    booking.bookdate="";
+    // setBooking({ ...booking,  });
   };
   const handleChangeInputDate = (e) => {
     const { name, value } = e.target;
@@ -274,7 +284,6 @@ export default function BookingSystem() {
     const { name, value } = e.target;
     setBookDateCheck({ [name]: value.toString() });
     setIsCheck(!isCheck);
-    
   };
   const bookingSubmit = async (e) => {
     e.preventDefault();
@@ -282,7 +291,7 @@ export default function BookingSystem() {
        const useremail = user.email;
        const username = user.name;
        const userphonenumber = user.phonenumber;
-      await axios.post("/api/bookings", { ...booking, email: useremail, namecustomer: username, phonenumber: userphonenumber });
+      await axios.post("/api/bookings", { ...booking, email: useremail, namecustomer: username, phonenumber: userphonenumber, hidestaffname: hidestaffname });
       if(arraytimeworkupdate){
       await axios.put("/api/staffschedule", {staffchangearray, arraytimeworkupdate})}
       setCallback(!callback);
@@ -336,8 +345,9 @@ export default function BookingSystem() {
             aria-label="Role"
             onChange={handleCategory}
             className="selectkindofservice"
+            required
           >
-            <option value="select">Chọn Loại Dịch Vụ</option>
+            <option value="">Chọn Loại Dịch Vụ</option>
             {category.map((ctg, index)=>
             <option value={ctg.name}>{`${index+1}. ${ctg.name}`}</option>
             )}
@@ -349,9 +359,11 @@ export default function BookingSystem() {
             name="service"
             aria-label="Role"
             onChange={handleService}
+            value={booking.service}
             className="selectservice"
+            required
           >
-            <option value="select">Chọn Dịch Vụ</option>
+            <option value="">Chọn Dịch Vụ</option>
             {listservice.map((cv, index)=>
             <option value={cv.title}>{`${index+1}. ${cv.title}`}</option>
             )}
@@ -361,8 +373,10 @@ export default function BookingSystem() {
             id="namestaff"
             name="namestaff"
             onChange={handleChangeInput2}
+            value={booking.namestaff}
             className="selectstaff"
-          > <option value="default">Chọn Nhân Viên</option>
+          > 
+          <option value="">Chọn Nhân Viên</option>
           {staffcheck.map((staffck) => (
             <option value={staffck.name}>{staffck.name}</option>
           ))}
@@ -375,8 +389,6 @@ export default function BookingSystem() {
             value={booking.bookdate}
             min={minDate.toISOString().substring(0,10)}
             max={maxDate.toISOString().substring(0,10)}
-           
-
             required
             onChange={handleChangeInputDate}
           /> 
@@ -385,8 +397,9 @@ export default function BookingSystem() {
               className="selecttimebooking"
               name ="selecttimebooking"
               onChange={e=> {handlefreescheduletoupdate(e)}}
+              required
               >
-            <option value="default">  Chọn thời gian </option>
+            <option value="">  Chọn thời gian </option>
 
           {numbertimeformat.map((nbt,index)=>
           {

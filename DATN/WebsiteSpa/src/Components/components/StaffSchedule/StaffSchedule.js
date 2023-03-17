@@ -8,15 +8,16 @@ import "./schedule.css"
 const initialState = {
     email:"",
     service: "",
-    arraytimework : [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20], // mảng thời gian
+    arraytimework : [1,2,3,4,5,6,7,8,9,null,11,12,13,14,15,16,17,18,19,20], // mảng thời gian
     namestaff:"",
     daywork:"",
-
+    service: "",
 };
 export default function StaffSchedule() {
   const state = useContext(Service);
   const [staffschedule, setStaffSchedule] = useState(initialState);
   const history = useNavigate();
+  const [user, setUser]= state.userAPI.user;
   const [callback, setCallback] = state.bookingAPI.callback;
   const [dayworkcheck, setDayWorkCheck] = useState();
   const [staffschedulecheck, setStaffScheduleCheck]=state.staffscheduleAPI.staffschedule;
@@ -34,6 +35,8 @@ export default function StaffSchedule() {
       const{name,value}=e.target;
       setDayWorkCheck(value);
     }
+   
+
     // lấy dữ liệu lịch nhân viên
   useEffect(() => {
     const getStaffSchedules = async () => {

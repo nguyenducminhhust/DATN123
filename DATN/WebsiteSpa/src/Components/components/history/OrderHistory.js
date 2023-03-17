@@ -41,6 +41,7 @@ export default function OrderHistory() {
           <thead>
             <tr>
               <th>STT</th>
+              <th>Địa chỉ Email</th>
               <th>Mã Thanh Toán ID</th>
               <th>Ngày Mua</th>
               <th> Xem Chi Tiết</th>
@@ -50,6 +51,7 @@ export default function OrderHistory() {
             {history.map((items, index) => (
               <tr key={items._id}>
                 <td>{index+1}</td>
+                <td>{items.email}</td>
                 <td>{items.paymentID}</td>
                 <td>{new Date(items.createdAt).toLocaleDateString()}</td>
                 <td>

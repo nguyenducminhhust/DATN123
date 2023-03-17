@@ -127,7 +127,7 @@ export default function Exportcost() {
                                                 onChange={e=>handleCost(e, i)}
                                                 className="managecostpdid"
                                             >
-                                                <option value="default">Chọn Dịch Vụ</option>
+                                                <option value="default">Chọn sản phẩm</option>
                                                 {cost.map((cst, index) =>
                                                     <option value={cst.productid}>{`${index + 1}. ${cst.productid}`}</option>
                                                 )}

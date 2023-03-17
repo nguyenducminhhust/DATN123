@@ -42,8 +42,11 @@ const bookingSystemSchema = new mongoose.Schema(
     },
     numbertime:{
       type:Number,
-    }
-    
+    },
+    hidestaffname: {
+      type: String,
+      trim: true,
+    },
     
   },
   {

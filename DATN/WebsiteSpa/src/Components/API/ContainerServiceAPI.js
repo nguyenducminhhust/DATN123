@@ -8,7 +8,7 @@ export default function ContainerServiceAPI() {
   useEffect(() => {
     const getContainerServices = async () => {
       const res = await axios.get("/api/containerservice");
-      console.log(res);
+      // console.log(res);
       setContainerServices(res.data);
     };
 

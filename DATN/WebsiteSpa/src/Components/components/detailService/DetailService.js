@@ -64,7 +64,7 @@ export default function DetailService() {
             className="buttonbuyservice"
             onClick={() => addCart({...detailService, price: priceDisplay, session: sessionUpdate})}
           >
-           Mua Ngay
+           Đặt Ngay
           </Link>
           </div>
           </div>

@@ -57,12 +57,14 @@
 .sobuoilieutrinh button{
     display: flex;  
     width: max-content;
+    padding: 6px 5px;
     gap: 10px ;   
     color: rgb(248, 246, 246);
     background-color:rgb(17, 98, 212);
     border: 2px solid black;
     margin-top: 15px;
     border-radius: 10px;
+    align-items: center;
 } 
 .sobuoilieutrinh button:hover{
     color: rgb(183, 201, 178);

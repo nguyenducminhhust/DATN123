@@ -32,6 +32,7 @@ export default function Bookinghtr() {
 
     const bookCheckInputs = () => {       
         setIsCheck(!isCheck);
+        setCallBack(!callback);
     };
     // Lấy dữ liệu lịch đặt theo khách hàng hoặc spa
     useEffect(() => {
@@ -89,8 +90,13 @@ export default function Bookinghtr() {
       const handleDeleteClick = async (bookcheck)=>{
         try {
           const param = bookcheck._id;
+          let checkstaff;
           const checktitleservice = checkTitleService(bookcheck.service);
-          const checkstaff = checkStaff(bookcheck.namestaff, bookcheck.bookdate);
+          if(bookcheck.namestaff!==""){
+            checkstaff = checkStaff(bookcheck.namestaff, bookcheck.bookdate);}
+            else {
+              checkstaff = checkStaff(bookcheck.hidestaffname, bookcheck.bookdate);
+            }
           let addnumberlost=checkstaff[0].arraytimework;
          for(let i=bookcheck.numbertime+1; i<bookcheck.numbertime+1+(checktitleservice[0].durationtime/30);i++){
             addnumberlost.push(i);
@@ -98,11 +104,19 @@ export default function Bookinghtr() {
           const newarraytimework = addnumberlost.sort((a, b) => a - b);
           const staffname =bookcheck.namestaff;
           const bookdate = bookcheck.bookdate;
-          const filterstaffsche = staffschedule.filter((staffsche)=>
+          const hidestaffname = bookcheck.hidestaffname;
+          let filterstaffsche;
+          if(bookcheck.namestaff!==""){
+          filterstaffsche = staffschedule.filter((staffsche)=>
           staffsche.namestaff===staffname&&staffsche.daywork===bookdate
+          );} else {
+            filterstaffsche = staffschedule.filter((staffsche)=>
+          staffsche.namestaff===hidestaffname&&staffsche.daywork===bookdate
           );
+          }
           const filterid = filterstaffsche[0]._id;
-          setTest(filterid);
+          // setTest(bookcheck.namestaff=="");
+           setTest(filterid);
           await axios.patch("/api/staffschedule",{_id: filterid,arraytimework: newarraytimework});
           await axios.delete(`/api/bookings/${param}`, {_id: bookcheck._id}); 
           setCallBack(!callback);
@@ -111,6 +125,7 @@ export default function Bookinghtr() {
           alert(err.response.data.msg);
         }
     };
+    console.log(test);
 return (
     <>
     <Header/>

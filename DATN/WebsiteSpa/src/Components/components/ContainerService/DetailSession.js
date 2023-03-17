@@ -7,8 +7,10 @@ import { Link } from "react-router-dom";
 import "./detailsCS.css"
 export default function DetailSession({index, dtshow, containerservices}) {
   const state = useContext(Service);
+  const [token] = state.token;
   const [isAdmin] = state.userAPI.isAdmin;
   const [isStaff] = state.userAPI.isStaff;
+  const [user, setUser]= state.userAPI.user;
   const [ischeck, setIsCheck] = useState(false);
   const [test, setTest]=useState(false);
   const [datasessionaftercheck, setDSAC] = useState();
@@ -27,7 +29,7 @@ export default function DetailSession({index, dtshow, containerservices}) {
     pushprocess.push(checkarrayprocess);
   }
   const takelistpushprocess = pushprocess[index];
-    setTest(findprocessuser);
+    
     for(let i=0; i<takelistpushprocess.length; i++){
     if(takelistpushprocess[i].session==value1){
       setDSAC(takelistpushprocess[i]);
@@ -41,8 +43,48 @@ export default function DetailSession({index, dtshow, containerservices}) {
 const setActivePayment = async(dtshow)=>{
 
 await axios.patch("api/payment", {paymentID: dtshow.paymentid, status: true});
-alert("Update Status Sucesss")
+alert("Đã cập nhật trạng thái thành công!")
 }
+
+console.log(user.name, user.debt);
+const cancelService = async(dtshow)=>{
+const filterpayment = payment.filter((pay)=>
+  pay.paymentID === dtshow.paymentid
+);
+  const getPriceService= getPrice(filterpayment[0], dtshow.servicename);
+ 
+  const handledebt = user.debt - getPriceService-(getPriceService/dtshow.totalsession)*dtshow.detailprocess.length;
+  const _id = dtshow._id;
+  // setTest(changeToBalance);
+  try {
+    await axios.patch(
+      "/user/updatedebt",
+      {handledebt},
+      {
+        headers: { Authorization: token },
+      }
+    );
+    await axios.patch(
+      "/api/updatestatuscontainerservice",
+      {_id: _id, status: false},
+      
+    )
+    
+    
+    alert("Đã hủy dịch vụ");
+} catch (err) {
+  alert(err.response.data.msg);
+}
+
+  }
+  const getPrice = (arr, item) => {
+    const filtered = arr.cart.filter(obj => obj.title === item);
+    const prices = filtered.map(obj => obj.price);
+    
+    return prices[0];
+
+  }
+  console.log(test);
 //Lọc ra  thanh toán trong containerservice==payment id
 const checkPaymentID = (payid)=> payment.filter((pay) => 
 pay.paymentID === payid );
@@ -70,9 +112,11 @@ const statuspayment = (payid)=>{
             to={`update_process/${dtshow._id}`}
           > Điền thông tin
           </Link>):(<button type="button" onClick={()=>setActivePayment(dtshow)}>Kích Hoạt</button>)}
-            
           </div>
           )}
+            {(!isAdmin && !isStaff) && (
+              <button type="button" onClick={() => cancelService(dtshow)}>Hủy dịch vụ</button>
+            )}
           </div>
           <div className="selectinfoservice">
               <select 

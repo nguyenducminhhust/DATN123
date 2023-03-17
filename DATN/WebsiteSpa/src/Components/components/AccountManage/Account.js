@@ -60,7 +60,7 @@ export default function Account() {
    <Header />
       <div className="login-page">
         <form onSubmit={registerSubmit}>
-          <h2>Tạo Tài Khoản</h2>
+          <h2>Tạo Tài Khoản Nhân Viên</h2>
           <input
             type="text"
             name="name"

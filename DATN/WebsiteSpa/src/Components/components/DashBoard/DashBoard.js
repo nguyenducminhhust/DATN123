@@ -172,6 +172,13 @@ export default function DashBoard() {
       return user.role === 2;
     })
   );
+  const totalsalry= (arr)=>{
+    let total =0;
+    arr.forEach(item =>{
+      total+= item.salary;
+    });
+    return total;
+  }
   // Xử lý Line
   const [exportbyselectdate, setExportBySelect] = useState(exportcost);
 
@@ -275,20 +282,30 @@ export default function DashBoard() {
           <div className="revenueinfo"><h1>Thông tin Doanh Thu</h1></div>
           <div className="bottomdashboard"> 
           <div>
-          <div className="linedatabymonth"><Line data={revenuedata} /> </div>
-            <div className="linedatabyday"><Line data={revenuedatabyday} />
+          <div className="linedatabymonth">
+              <h4>Doanh thu theo Tháng Trong Năm {(endDate.getFullYear())}</h4>
+            <Line data={revenuedata} /> </div>  
+
+            <div className="linedatabyday">
+            <h4>Doanh thu theo Ngày Trong Tháng {(endDate.getMonth())}</h4>
+              <Line data={revenuedatabyday} />
             </div>
             </div>
             <div className="piechartdashboard">
             <h5>  Doanh thu từ ngày {(startDate.getDate())}/{(startDate.getMonth()+1)}/{(startDate.getFullYear())} đến
              ngày {(endDate.getDate())}/{(endDate.getMonth()+1)}/{(endDate.getFullYear())} là : 
             {ishowrevenuebyday&&(revenuebyselectday())}$</h5>
-            <h5>  Tổng tiền chưa thanh toán của khách hàng: {totaluserdebt()} $</h5>
+            <tr>
+           <h5>  Tổng tiền chưa thanh toán của khách hàng: {totaluserdebt()} $</h5>
+            </tr>
+
             <h5>  Tổng tiền số tiền hàng nhập vào: {totalimport} $</h5>
             <h5>  Tổng tiền số tiền hàng xuất ra: {totalexport} $</h5>
             <h5>  Tổng số khách hàng: {role0.length}</h5>
             <h5>  Tổng số nhân viên: {role2.length}</h5>
-
+            <h5>  Tổng lương nhân viên: {totalsalry(role2)}$</h5>
+            <hr/>
+            <h4> Doanh số bán theo danh mục: </h4>
              {(ishowrevenuebyday) && 
            ( <Pie data={data} />)}
             </div>

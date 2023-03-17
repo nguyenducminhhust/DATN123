@@ -16,7 +16,7 @@ export default function StaffScheduleAPI() {
     };
     getStaffSchedules();
   }, [callback]); 
- console.log(staffschedules);
+//  console.log(staffschedules);
   return {
     staffschedule: [staffschedules, setStaffSchedule],
     callback: [callback, setCallback],

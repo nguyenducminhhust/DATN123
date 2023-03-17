@@ -5,6 +5,7 @@ import { Service } from "../../GlobalState";
 import Loading from "../utils/loading/Loading";
 import Header from "../headers/Header";
 import { useNavigate, useParams } from "react-router-dom";
+import ReactPaginate from "react-paginate";
 const initialState = {
   service_id: "",
   title: "",
@@ -30,6 +31,16 @@ export default function CreateService() {
   const [onEdit, setOnEdit] = useState(false);
   const [callback, setCallback] = state.servicesAPI.callback;
   const [inputprice, setInputprice] = useState([{ session: "", price: "" }]);
+  const itemsPerPage = 5;
+  const [itemOffset, setItemOffset] = useState(0);
+  const endOffset = itemOffset + itemsPerPage;
+  const currentItems = services.slice(itemOffset, endOffset);
+  const pageCount = Math.ceil(services.length / itemsPerPage);
+  const handlePageClick = (event) => {
+    const newOffset = (event.selected * itemsPerPage) % services.length;
+    
+    setItemOffset(newOffset);
+  };
   // Lấy dữ liệu dịch vụ, trả về trạng thái tạo hay sửa
   useEffect(() => {
     if (param.id) {
@@ -156,7 +167,7 @@ export default function CreateService() {
       alert(err.response.data.msg);
     }
   };
-
+ 
   const styleUpload = {
     display: images ? "block" : "none",
   };
@@ -164,6 +175,7 @@ export default function CreateService() {
   return (
     <>
       <Header />
+      <div className="overrallcreateservice">
       <div className="create_service">
         <div className="upload">
           <input type="file" className="file" id="file_up" onChange={handleUpload} />
@@ -237,7 +249,8 @@ export default function CreateService() {
 
           </div>
           <div className="row">
-            <label htmlFor="durationtime">Thời gian dự kiến - phút (chia hết cho 30)</label>
+            <label htmlFor="durationtime">Thời gian dự kiến - phút </label>
+            {/* chia hết cho 30 */}
             <input
               type="number"
               name="durationtime"
@@ -292,6 +305,57 @@ export default function CreateService() {
           <button type="submit">{onEdit ? "Cập Nhật" : "Tạo"}</button>
         </form>
       </div>
+      <div className="tableservice">
+        <h4> Bảng dịch vụ</h4>
+      <table >
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Mã dịch vụ</th>
+                        <th>Tên dịch vụ</th>
+                        <th>Thời gian dự kiến</th>
+                        <th>Danh mục</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                {currentItems.map((ct, index) => {
+      return (
+        <tr>
+          <td>{index + 1}</td>
+          <td>{ct.service_id}</td>
+          <td>{ct.title}</td>
+          <td>{ct.durationtime}</td>
+          <td>{ct.category}</td>
+        </tr>
+      );
+    })}
+                </tbody>
+            </table>
+            <div className="paginatemanagestaff">
+              <ReactPaginate
+          previousLabel="Trước"
+          nextLabel="Sau"
+          pageClassName="page-item"
+          pageLinkClassName="page-link"
+          previousClassName="page-item"
+          previousLinkClassName="page-link"
+          nextClassName="page-item"
+          nextLinkClassName="page-link"
+          breakLabel="..."
+          breakClassName="page-item"
+          breakLinkClassName="page-link"
+          pageCount={pageCount}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={3}
+          onPageChange={handlePageClick}
+          containerClassName="pagination"
+          activeClassName="active"
+        />
+       </div>
+      </div>
+      </div>
+
     </>
   );
 }

@@ -112,9 +112,9 @@ export default function ManageStaff() {
         <h2> Quản Lý Nhân Viên</h2>
         <p>Tổng số Nhân Viên Spa: {stafflist.length}</p>
       </div>
-<div className="managestaff">
+<div className="managestafftable">
     <form onSubmit={editformSubmit}>
-            <table>
+            <table className="managestaff">
                 <thead>
                     <tr>
                         <th>STT</th>

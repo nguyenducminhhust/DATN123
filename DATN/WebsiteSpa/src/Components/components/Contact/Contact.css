@@ -5,7 +5,11 @@
     width: 230px;
     margin-left: 5px;
   }
-  
+  .contacttable1 th, .contacttable1 td{
+      padding: 1em;
+      background: #c0d7ec;
+      border-bottom: 2px solid white; 
+  }
   .infoContact {
     flex: 1;
     background-color: #febb02;
@@ -22,7 +26,7 @@
     color: #555;
     margin-bottom: 10px;
   }
-  
+
   .contactItem{
     display: flex;
     flex-direction: column;

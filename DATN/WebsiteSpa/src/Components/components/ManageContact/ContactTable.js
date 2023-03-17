@@ -22,7 +22,7 @@ export default function ContactTable() {
         <Header/>
         <div className="maincontacttable">
         <h2> Thông tin liên hệ từ khách hàng</h2>
-        <div className="contacttable">
+        <div className="contacttable1">
 <table>
   <thead>
     <tr>

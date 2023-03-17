@@ -66,7 +66,7 @@ export default function Categories() {
       <Header />
       <div className="categories">
         <form onSubmit={createCategory}>
-          <label htmlFor="category">Danh Mục</label>
+          <label htmlFor="category">Danh Mục Dịch vụ</label>
           <input
             type="text"
             name="category"

@@ -1,6 +1,43 @@
-.managestaff table, .managestaff th, .managestaff td{
-    border: 1px solid black;
+  .managestafftable tr{
+   
 }
+.managestafftable th, .managestafftable td {
+    padding: 1em;
+    background: #46e0c7;
+    border-bottom: 2px solid white; 
+  }
+/* .managestafftable table tr:last-child td:first-child {
+    border: 2px solid orange;
+    border-bottom-left-radius: 10px;
+}
+    
+.managestafftable table tr:last-child td:last-child {
+    border: 2px solid green;
+    border-bottom-right-radius: 10px;
+} */
+.managestaff {
+    border-collapse: collapse;
+  border-radius: 1em;
+  overflow: hidden;
+}
+table th:first-child {
+    border-top-left-radius: 10px; /* Đặt border-radius cho góc trên bên trái của header cell */
+    
+}
+  
+  table th:last-child {
+    border-top-right-radius: 10px; /* Đặt border-radius cho góc trên bên phải của header cell */
+  
+}
+  
+  /* table td:first-child {
+    border-bottom-left-radius: 10px; 
+  }
+  
+  table td:last-child {
+    border-bottom-right-radius: 10px; 
+  } */
+/* .managestaff th, */
 .editstaffbut, .savestaffbut{
     border-radius: 5px;
     padding: 2px 8px;
@@ -36,4 +73,22 @@
     justify-content: space-around;
     margin-top: 15px;
     font-size: 20px;
+}
+.categories button{
+  background-color: rgb(250, 189, 110);
+  color: #2f6df1;
+  font-size: 20px;
+  border-radius: 7px;
+  font-weight: bold;
+}
+.categories{
+  border: 2px solid black;
+  padding: 10px 20px;
+  border-radius: 8px;
+  background-color: #a7bdec;
+}
+.categories p{
+
+  font-size: 20px;
+  font-weight: bold;
 }

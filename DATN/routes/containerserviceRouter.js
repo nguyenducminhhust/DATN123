@@ -13,4 +13,5 @@ router
   .delete(auth, authAdmin, containerserviceCtrl.deleteContainerService)
   .put(auth, authAdmin,containerserviceCtrl.updateContainerService);
 router.patch("/adddetailprocess/:id", containerserviceCtrl.addDetailProcess);
+router.patch("/updatestatuscontainerservice", containerserviceCtrl.updateStatusContainerService); 
 module.exports = router;

@@ -77,6 +77,19 @@ const containerserviceCtrl = {
       return res.status(500).json({ msg: err.message });
     }
   },
+  updateStatusContainerService: async (req, res) => {
+    try {
+      await ContainerService.findOneAndUpdate(
+        { _id: req.body._id },
+        {
+          status: req.body.status,
+        }
+      );
 
+      return res.json({ msg: "Đã cập nhật trạng thái dịch vụ" });
+    } catch (err) {
+      return res.status(500).json({ msg: err.message });
+    }
+  },
 };
 module.exports = containerserviceCtrl;

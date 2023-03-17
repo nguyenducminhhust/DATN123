@@ -18,6 +18,7 @@ const bookingCtrl = {
         phonenumber,
         namestaff,
         numbertime,
+        hidestaffname,
       } = req.body;
       const newBooking = new Booking({
         email,
@@ -27,6 +28,7 @@ const bookingCtrl = {
         phonenumber,
         namestaff,
         numbertime,
+        hidestaffname,
       });
 
       await newBooking.save(); 

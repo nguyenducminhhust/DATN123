@@ -1,8 +1,8 @@
-.managecustomer table, .managecustomer th, .managecustomer td{
-    border: 1px solid black;
-}
-.managecustomer table, .managecustomer th, .managecustomer td{
-    border: 1px solid black;
+
+ .managecustomer th, .managecustomer td{
+    padding: 1em;
+    background: #5de9d1;
+    border-bottom: 2px solid white; 
 }
 .managecustomer{
     width: max-content;
@@ -29,4 +29,7 @@
     font-weight: bold;
     font-size: 25px;
     margin-bottom: 10px;
+}
+.managecustomer table{
+
 }

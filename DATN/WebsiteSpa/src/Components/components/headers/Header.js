@@ -77,7 +77,7 @@ export default function Header() {
       <Link to="/bookinghtr" className="bookinghtr">  <li>Lịch sử đặt lịch</li></Link>
 
       {(!isStaff)&&( <Link to="/bookingsystem" className="bookingsystem"> <li>Đặt Lịch Hẹn </li></Link>)}
-      {(!isStaff)&&( <Link to="/history" className="history"><li>Lịch Sử Mua Hàng  </li></Link>)}
+      {(!isStaff)&&( <Link to="/history" className="history"><li>Lịch Sử Mua Dịch Vụ  </li></Link>)}
       <Link to="/" onClick={logoutUser} className="logout">
       <li>Logout</li>
       </Link>

@@ -106,5 +106,7 @@
     justify-content: space-around;
     font-size: 25px;
 }
-
+.fillinfoservicebut{
+    height: max-content;
+}
 

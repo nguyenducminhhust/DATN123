@@ -7,11 +7,11 @@ export default function ReadOnlyStaff({ index,stafflist, handleEditClick,handleD
                 <td>{index+1}</td>
                 <td>{stafflist.email}</td>
                 <td>{stafflist.name}</td>
-                <td>{stafflist.phonenumber}</td>
+                <td>0{stafflist.phonenumber}</td>
                 <td>{stafflist.role}</td>
                 <td>{stafflist.kindofstaff}</td>
                 <td>{stafflist.service}</td>
-                <td>{stafflist.salary}</td>
+                <td>{stafflist.salary}$</td>
                
                 <td>
                     <button className="editstaffbut" type="button" onClick={(event)=> handleEditClick(event, stafflist)}
